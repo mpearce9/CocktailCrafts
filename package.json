@@ -4,7 +4,8 @@
     "express": "^4.17.3",
     "method-override": "^3.0.0",
     "morgan": "^1.10.0",
-    "vue": "^3.2.31"
+    "vue": "^3.2.31",
+    "vue-router": "^4.0.14"
   },
   "scripts": {
     "postinstall": "cd frontend && npm install && cd ../server && npm install",
