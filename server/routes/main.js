@@ -3,7 +3,7 @@ const controller = require('../controller/mainController');
 const router = express.Router();
 
 router.get('/', function (req, res) {
-    res.render('home');
+    res.sendFile('../dist/index.html')
 });
 
 router.get('/home', function (req, res) {

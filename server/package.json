@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "express-vue": "^5.16.0"
+  }
+}
