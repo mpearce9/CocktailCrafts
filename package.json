@@ -8,6 +8,7 @@
   },
   "scripts": {
     "postinstall": "cd frontend && npm install && cd ../server && npm install",
-    "start": "cd frontend && npm run build && cd ../server && node app"
+    "start": "cd frontend && npm run build && cd ../server && node app",
+    "serve": "cd frontend && npm run serve"
   }
 }

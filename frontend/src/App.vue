@@ -38,23 +38,25 @@
     </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <component :is="components[1]"/>
     </v-main>
   </v-app>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld';
+import SearchBar from './components/SearchBar.vue';
 
 export default {
   name: 'App',
 
   components: {
     HelloWorld,
+    SearchBar
   },
 
   data: () => ({
-    //
+    components: ["hello-world", "search-bar"]
   }),
 };
 </script>
