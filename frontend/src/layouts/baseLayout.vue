@@ -1,77 +1,57 @@
 <template>
 <v-app>
-  <v-card color="basil">
-    <v-card-title class="text-center justify-center py-6">
-      <h1 class="font-weight-bold text-h2 basil--text">
-        BASiL
-      </h1>
-    </v-card-title>
-
-    <v-tabs
-      v-model="tab"
-      background-color="transparent"
-      color="basil"
-      grow
+  <v-card class="overflow-hidden" color = "rgb(15,12,12)">
+    <v-app-bar
+      fixed
+      color = "rgb(15,12,12)"
+      dark
     >
-      <v-tab
-        v-for="item in items"
-        :key="item"
-      >
-        {{ item }}
-      </v-tab>
-    </v-tabs>
-
-    <v-tabs-items v-model="tab">
-      <v-tab-item
-        v-for="item in items"
-        :key="item"
-      >
-        <v-card
-          color="basil"
-          flat
-        >
-          <v-card-text>{{ text }}</v-card-text>
-        </v-card>
-      </v-tab-item>
-    </v-tabs-items>
+      <v-toolbar-title>cocktail crafts</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn plain href="/">
+        HOME
+      </v-btn>
+      <v-btn plain href = "/discover">
+        DISCOVER
+      </v-btn>
+      <v-btn plain href = "/login">
+        LOGIN
+      </v-btn>
+    </v-app-bar>
+      <v-container style="height: 100px;">
+      </v-container>
   </v-card>
 
-  <v-content>
+  <v-main color ="rgb(15, 12, 12)">
     <router-view/>
-  </v-content>
+  </v-main>
 
+  <v-divider color = "white"></v-divider>
   <v-footer
     dark
     padless
+    color = "rgb(15,12,12)"
+    fixed
   >
-    <v-card
-      flat
-      tile
-      class="indigo lighten-1 white--text text-center"
+    <v-row
+      justify="center"
+      no-gutters
     >
-      <v-card-text>
-        <v-btn
-          v-for="icon in icons"
-          :key="icon"
-          class="mx-4 white--text"
-          icon
-        >
-          <v-icon size="24px">
-            {{ icon }}
-          </v-icon>
-        </v-btn>
-      </v-card-text>
-
-      <v-card-text class="white--text pt-0">
-        Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-      </v-card-text>
-
-      <v-divider></v-divider>
-
-      <v-card-text class="white--text">
-        {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-      </v-card-text>
-    </v-card>
+      <v-col
+        class="rgb(15, 12, 12) py-4 text-center white--text"
+        cols="12"
+      >
+      <v-btn plain href="/">
+        ABOUT US
+      </v-btn>
+      <v-btn plain href = "/discover">
+        CONTACT
+      </v-btn>
+      <v-btn plain disabled>
+        Copyright 2022
+      </v-btn>
+      </v-col>
+    </v-row>
   </v-footer>
 
   </v-app>
