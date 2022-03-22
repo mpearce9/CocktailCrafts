@@ -11,9 +11,10 @@
 #homeimg{
     border-radius:50%;
     top:25%;
-    left:75%;
 }
 #homecard{
-    top:45%;
-    left:-45%;
+    top:25%;
+}
+.logincard{
+    padding:20px;
 }

@@ -2,10 +2,10 @@
     <v-app>
     <v-container>
     <v-row
-      class="mb-6"
+      class="mb-8"
       no-gutters
     >
-      <v-col md="4">
+      <v-col md="4" offset-md="2">
         <v-img id = "homeimg"
         :aspect-ratio = "46/46"
         max-width = "350"
@@ -14,7 +14,7 @@
       </v-col>
       <v-col
         md="4"
-        offset-md="4"
+        offset-md="0"
       >
         <v-card
         color = "rgb(15,12,12)"
@@ -29,6 +29,5 @@
       </v-col>
     </v-row>
     </v-container>
-        
     </v-app>
 </template>
