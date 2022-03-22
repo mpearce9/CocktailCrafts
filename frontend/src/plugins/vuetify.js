@@ -9,8 +9,9 @@ export default new Vuetify({
         options: {
             customProperties: true
         },
+        dark: true,
         themes: {
-            light: {
+            dark: {
                 primary: colors.shades.white,
                 secondary: colors.blue,
                 background: colors.shades.black
