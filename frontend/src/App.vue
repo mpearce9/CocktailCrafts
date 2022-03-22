@@ -45,7 +45,7 @@
 
 <script>
 import HelloWorld from './components/HelloWorld';
-import SearchBar from './components/SearchBar.vue';
+import SearchBar from './components/SearchBar';
 
 export default {
   name: 'App',
@@ -60,3 +60,9 @@ export default {
   }),
 };
 </script>
+
+<style scoped>
+.v-application {
+  background-color: var(--v-background-base)
+}
+</style>

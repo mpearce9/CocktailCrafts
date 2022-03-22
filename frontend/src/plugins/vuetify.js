@@ -6,10 +6,14 @@ Vue.use(Vuetify);
 
 export default new Vuetify({
     theme: {
+        options: {
+            customProperties: true
+        },
         themes: {
             light: {
-                primary: colors.blue,
-                secondary: colors.shades.black
+                primary: colors.shades.white,
+                secondary: colors.blue,
+                background: colors.shades.black
             }
         }
     }
