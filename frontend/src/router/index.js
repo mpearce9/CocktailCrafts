@@ -13,6 +13,11 @@ const routes = [
         path: '/login',
         name: 'login',
         component: () => import('../views/loginComponent')
+    },
+    {
+        path: '/search',
+        name: 'search',
+        component: () => import('../components/SearchBar')
     }
 ]
 
