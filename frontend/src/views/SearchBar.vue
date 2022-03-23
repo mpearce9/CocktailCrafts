@@ -12,10 +12,10 @@
                     </v-tabs>
                 </v-col>
             </v-row>
-            <v-scroll-x-reverse-transition v-if="selected == 0" mode="in" hide-on-leave="true">
+            <v-scroll-x-reverse-transition v-if="selected == 0" mode="in" :hide-on-leave="true">
                 <component :is="curComps[selected]" :option_searches="option_searches"/>
             </v-scroll-x-reverse-transition>
-            <v-scroll-x-transition v-else mode="in" hide-on-leave="true">
+            <v-scroll-x-transition v-else mode="in" :hide-on-leave="true">
                 <component :is="curComps[selected]" :option_searches="option_searches"/>
             </v-scroll-x-transition>
             <v-row justify="center">
@@ -24,6 +24,7 @@
                         :headers="sample_res_headers"
                         :items="sample_res"
                         class="elevation-1 mx-16"
+                        @click:row="rowClicked"
                     >
                     </v-data-table>
                 </v-col>
@@ -33,8 +34,9 @@
 </template>
 
 <script>
-import IngredientSearch from './IngredientSearch.vue'
-import NameSearch from './NameSearch.vue'
+import IngredientSearch from '../components/IngredientSearch.vue'
+import NameSearch from '../components/NameSearch.vue'
+import router from '../router/index'
 export default  {
     
     components: {
@@ -52,14 +54,19 @@ export default  {
                                  {text: "Mixer", value: "mixer"},
                                  {text: "Bitters", value: "bitters"},
                                  {text: "Garnish", value: "garnish"}],
-            sample_res: [{name: "Old Fashioned", liquor: "Whiskey", mixer: "Simple Syrup", bitters: "Angostura", garnish: "Lemon"},
-                         {name: "Martini", liquor: "Gin", mixer: "Vermouth", bitters: "None", garnish: "Olive"},
-                         {name: "Screwdriver", liquor: "Vodka", mixer: "Orange Juice", bitters: "None", garnish: "None"}],
+            sample_res: [{name: "Old Fashioned", liquor: "Whiskey", mixer: "Simple Syrup", bitters: "Angostura", garnish: "Lemon", id: 0},
+                         {name: "Martini", liquor: "Gin", mixer: "Vermouth", bitters: "None", garnish: "Olive", id:1},
+                         {name: "Screwdriver", liquor: "Vodka", mixer: "Orange Juice", bitters: "None", garnish: "None", id:2}],
             curComps: [NameSearch, IngredientSearch],
             selected: 0
         }
         
     },
+    methods: {
+        rowClicked(value, info){
+            router.push({name: 'recipe', params: { id: value.id } })
+        }
+    }
 }
 </script>
 
