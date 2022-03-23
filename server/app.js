@@ -5,6 +5,8 @@ const methodOverride = require('method-override');
 const main = require('./routes/main');
 const { ppid } = require('process');
 
+
+
 //create app 
 const app = express();
 
@@ -24,11 +26,16 @@ app.use('/public', express.static('public'));
 
 //set up routes
 
+//require('./routes')(app)
 
 //Import route files for coursedetails and index
 var routes = require('./routes/main');
 
-app.use('/', routes);
+//app.use('/', routes);
+
+app.get('/*', (req, res)=> {
+    res.sendFile(__dirname + '/dist/index.html')
+})
 
 app.listen(3000);
 
