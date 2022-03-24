@@ -15,6 +15,21 @@ const routes = [
         component: () => import('../views/loginComponent')
     },
     {
+        path: '/aboutus',
+        name: 'About Us',
+        component: () => import('../views/aboutComponent')
+    },
+    {
+        path: '/discover',
+        name: 'Discover',
+        component: () => import('../views/discoverComponent')
+    },
+    {
+        path: '/account',
+        name: 'Account',
+        component: () => import('../views/accountComponent')
+    },
+    {
         path: '/search',
         name: 'search',
         component: () => import('../views/SearchBar')
