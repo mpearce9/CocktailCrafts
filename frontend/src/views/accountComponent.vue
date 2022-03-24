@@ -19,7 +19,7 @@
             </v-row>
             <v-row justify="center">
                 <v-col cols="6">
-                    <v-btn block color = "info" href = "/savedRecipes">Your Saved Recipes</v-btn>
+                    <v-btn block color = "info" href = "/savedCocktails">Your Saved Cocktails</v-btn>
                 </v-col>
                 <v-col cols="6">
                     <v-btn block color = "info" href = "/accountDetails">Account Details</v-btn>
