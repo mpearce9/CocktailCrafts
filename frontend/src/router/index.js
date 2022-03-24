@@ -31,9 +31,16 @@ const routes = [
     },
     {
         path: '/search',
-        name: 'Search',
-        component: () => import('../components/SearchBar')
+        name: 'search',
+        component: () => import('../views/SearchBar')
+    },
+    {
+        path: '/recipe/:id',
+        name: "recipe",
+        props: true,
+        component: () => import('../views/recipeComponent')
     }
+
 ]
 
 export default new VueRouter({
