@@ -28,7 +28,7 @@
             ></v-text-field>
 
             <v-btn
-            color="info" block
+            color="info" block href = "/account"
             >
             log in
             </v-btn>
@@ -80,7 +80,7 @@
             ></v-checkbox>
 
             <v-btn
-            color="info" block
+            color="info" block href = "/account"
             >
             join now
             </v-btn>
