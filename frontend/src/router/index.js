@@ -25,8 +25,13 @@ const routes = [
         component: () => import('../views/discoverComponent')
     },
     {
+        path: '/account',
+        name: 'Account',
+        component: () => import('../views/accountComponent')
+    },
+    {
         path: '/search',
-        name: 'search',
+        name: 'Search',
         component: () => import('../components/SearchBar')
     }
 ]
