@@ -26,6 +26,26 @@
                         class="elevation-1 mx-16"
                         @click:row="rowClicked"
                     >
+                    <template v-slot:item.liquor="{item}">
+                        <v-list>
+                            <v-list-item v-for="l in item.liquor" :key="l">{{l}}</v-list-item>
+                        </v-list>
+                    </template>
+                    <template v-slot:item.mixer="{item}">
+                        <v-list>
+                            <v-list-item v-for="m in item.mixer" :key="m">{{m}}</v-list-item>
+                        </v-list>
+                    </template>
+                    <template v-slot:item.bitters="{item}">
+                        <v-list>
+                            <v-list-item v-for="b in item.bitters" :key="b">{{b}}</v-list-item>
+                        </v-list>
+                    </template>
+                    <template v-slot:item.garnish="{item}">
+                        <v-list>
+                            <v-list-item v-for="g in item.garnish" :key="g">{{g}}</v-list-item>
+                        </v-list>
+                    </template>
                     </v-data-table>
                 </v-col>
             </v-row>
@@ -54,9 +74,9 @@ export default  {
                                  {text: "Mixer", value: "mixer"},
                                  {text: "Bitters", value: "bitters"},
                                  {text: "Garnish", value: "garnish"}],
-            sample_res: [{name: "Old Fashioned", liquor: "Whiskey", mixer: "Simple Syrup", bitters: "Angostura", garnish: "Lemon", id: 0},
-                         {name: "Martini", liquor: "Gin", mixer: "Vermouth", bitters: "None", garnish: "Olive", id:1},
-                         {name: "Screwdriver", liquor: "Vodka", mixer: "Orange Juice", bitters: "None", garnish: "None", id:2}],
+            sample_res: [{name: "Old Fashioned", liquor: ["Whiskey", "Rye"], mixer: ["Simple Syrup"], bitters: ["Angostura"], garnish: ["Lemon"], instructions: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", id: 0},
+                        {name: "Martini", liquor: ["Gin", "Vodka"], mixer: ["Vermouth"], bitters: ["None"], garnish: ["Olive"], instructions: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", id:1},
+                        {name: "Screwdriver", liquor: ["Vodka"], mixer: ["Orange Juice"], bitters: ["None"], garnish: ["None"], instructions: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", id:2}],
             curComps: [NameSearch, IngredientSearch],
             selected: 0
         }
@@ -71,10 +91,7 @@ export default  {
 </script>
 
 <style scoped>
-.v-col {
-    background-color: var(--v-primary-base);
-}
-.v-list-item__title {
-    color: "black" !important;
+.v-list {
+    background: none
 }
 </style>
