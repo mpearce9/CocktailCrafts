@@ -6,7 +6,7 @@
       color = "rgb(15,12,12)"
       dark
     >
-      <v-toolbar-title>cocktail crafts</v-toolbar-title>
+      <v-toolbar-title style="cursor: pointer" @click="$router.push('/')">cocktail crafts</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn plain href="/">
         HOME
