@@ -15,11 +15,11 @@
           <input type="text" size="20" style="box-shadow: 1px 1px 2px 2px;" />
           <br><br>
           <p style="color:white">Activities: </p>
-          <select  style="width: 180px; background-color: white; box-shadow: 1px 1px 2px 2px;" >
-              <option>Activity 1</option>
-              <option>Activity 2</option>
-              <option>Activity 3</option>
-              <option>Activity 4</option>
+          <select  style="width: 180px; background-color: white; box-shadow: 1px 1px 2px 2px; color:black" >
+              <option style="color:black">Activity 1</option>
+              <option style="color:black">Activity 2</option>
+              <option style="color:black">Activity 3</option>
+              <option style="color:black">Activity 4</option>
           </select>
           <br><br>
         </form>

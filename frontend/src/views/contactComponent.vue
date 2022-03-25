@@ -12,15 +12,15 @@
         </h2>
         <form style="background-color:#3760D6; margin:auto; width: 400px">
           <p style="color:white">Name: </p>
-          <input type="text" size="20" style="box-shadow: 1px 1px 2px 2px;" placeholder=" John Doe" />
+          <input type="text" size="20" style="box-shadow: 1px 1px 2px 2px; color:black" placeholder=" John Doe" />
           <br><br>
           <p style="color:white">Email: </p>
-          <input type="email" size="20" style="box-shadow: 1px 1px 2px 2px;" placeholder=" john@example.com" />
+          <input type="email" size="20" style="box-shadow: 1px 1px 2px 2px; color:black" placeholder=" john@example.com" />
           <br> <br>
           <p style="color:white">Question: </p>
-          <input type="text" size="20" style="box-shadow: 1px 1px 2px 2px;" />
+          <input type="text" size="20" style="box-shadow: 1px 1px 2px 2px; color:black" />
           <br> <br>
-          <button  class="button" >Submit</button>
+          <v-btn color = "info">Submit</v-btn>
         </form>
 
       </v-col>
