@@ -31,7 +31,7 @@ app.use('/public', express.static('public'));
 //Import route files for coursedetails and index
 var routes = require('./routes/main');
 
-//app.use('/', routes);
+app.use('/api/', routes);
 
 app.get('/*', (req, res)=> {
     res.sendFile(__dirname + '/dist/index.html')
