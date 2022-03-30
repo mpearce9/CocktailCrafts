@@ -14,21 +14,21 @@
             lazy-validation
         >
             <v-text-field
-            v-model="email"
+            v-model="emailbox"
             :rules="emailRules"
             label="E-mail"
             required
             ></v-text-field>
 
             <v-text-field
-            v-model="password"
+            v-model="passwordbox"
             :rules="passwordRules"
             label="Password"
             required
             ></v-text-field>
 
             <v-btn
-            color="info" block href = "/account"
+            color="info" block @click="loginUser"
             >
             log in
             </v-btn>
@@ -51,7 +51,7 @@
             lazy-validation
         >
             <v-text-field
-            v-model="name"
+            v-model="namebox"
             :counter="10"
             :rules="nameRules"
             label="Name"
@@ -59,14 +59,14 @@
             ></v-text-field>
 
             <v-text-field
-            v-model="email1"
+            v-model="emailbox1"
             :rules="emailRules"
             label="E-mail"
             required
             ></v-text-field>
 
             <v-text-field
-            v-model="password1"
+            v-model="passwordbox1"
             :rules="passwordRules"
             label="Password"
             required
@@ -80,7 +80,7 @@
             ></v-checkbox>
 
             <v-btn
-            color="info" block href = "/account"
+            color="info" block @click="signUp"
             >
             join now
             </v-btn>
@@ -94,27 +94,96 @@
 
 
 <script>
+  import axios from 'axios';
+  const apiClient = axios.create({ baseUrl: 'http://localhost:3000', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' } });
+  async function postData(url = '', data = {}) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data) // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
+  }
   export default {
-    data: () => ({
-      valid: false,
-      email: '',
-      email1:'',
-      password:'',
-      password1:'',
-      name:'',
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-      passwordRules:[
-          v => !!v || 'Password is required',
-          v => (v && v.length >8) || 'Password must be more than 8 characters',
-      ],
-      nameRules: [
-        v => !!v || 'Name is required',
-        v => v.length <= 10 || 'Name must be less than 10 characters',
-      ],
-      checkbox: false,
-    })
+    data(){
+        return{
+        valid: false,
+        emailbox: '',
+        emailbox1:'',
+        passwordbox:'',
+        passwordbox1:'',
+        namebox:'',
+        emailRules: [
+          v => !!v || 'E-mail is required',
+          v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        ],
+        passwordRules:[
+            v => !!v || 'Password is required',
+            v => (v && v.length >8) || 'Password must be more than 8 characters',
+        ],
+        nameRules: [
+          v => !!v || 'Name is required',
+          v => v.length <= 10 || 'Name must be less than 10 characters',
+        ],
+        checkbox: false,
+      }
+      },
+      methods:{
+            loginUser(){
+                apiClient.get('/api/login', {
+                    email: this.email,
+                    password: this.password
+                })
+                .then(response => {
+                // JSON responses are automatically parsed.
+                    if(response.data.local){
+                        this.$message({
+                            message: 'Login Successful...',
+                            type: 'success'
+                        });
+                        this.setUserData(response.data.local);
+                        this.fullscreenLoading = false;
+                        this.$router.push({name: 'User'})
+                        
+                    }else{
+                        this.fullscreenLoading = false;
+                        this.errorMsg = response.data;
+                    }
+                   
+                })
+                .catch(e => {
+                    this.errors.push(e)
+                })
+            },
+            signUp(){
+        //     apiClient.post('/api/signup', {
+        //         name: this.name,
+        //         email: this.emailbox1,
+        //         password: this.passwordbox1
+        //     })
+        //     .then(response => {
+        //         if(response.data.success){
+        //             console.log(response);
+        //         }else{
+        //             alert(response.data);
+        //         }
+        //     })
+        //     .catch(e => {
+        //         this.errors.push(e)
+        //     })
+        // }
+            postData("/api/signup", { "name":"cameron ownbey", "email":"cameron.ownbey@gmail.com", "password":"cam1234789" })
+            .then(response => console.log(response))
+            .then(data => {
+              console.log('Success:', data);
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+      }
+      }
   }
 </script>

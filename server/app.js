@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const methodOverride = require('method-override');
 const main = require('./routes/main');
 const { ppid } = require('process');
+const mongoose = require ('mongoose');
+const cors = require('cors');
 
 
 
@@ -11,7 +13,7 @@ const { ppid } = require('process');
 const app = express();
 
 //configure appm
-let port = 3000;
+let port = 8081;
 let host = 'localhost';
 app.set('view engine', 'ejs');
 
@@ -24,13 +26,27 @@ app.use(methodOverride('_method'));
 
 app.use('/public', express.static('public'));
 
+const db = require("./models");
+db.mongoose
+  .connect(db.url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.log("Connected to the database!");
+  })
+  .catch(err => {
+    console.log("Cannot connect to the database!", err);
+    process.exit();
+  });
+
 //set up routes
 
 //require('./routes')(app)
 
 //Import route files for coursedetails and index
-var routes = require('./routes/main');
-
+var routes = require('./routes/main.js');
+app.use(cors());
 app.use('/api/', routes);
 
 app.get('/*', (req, res)=> {
