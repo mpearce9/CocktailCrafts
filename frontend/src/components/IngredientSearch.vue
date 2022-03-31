@@ -13,8 +13,13 @@
 
 <script>
 export default {
-    props: {
-        option_searches: Array
+    data(){
+        return {
+            option_searches: [{"name" : "Liquor", "options" : ["Whiskey", "Gin", "Vodka", "Rum"]}, 
+                              {"name" : "Mixer", "options" : ["Orange Juice", "Cranberry Juice", "Simple Syrup", "Vermouth"]},
+                              {"name" : "Bitters", "options" : ["Angostura", "Orange", "Peychauds", "Cinnamon"]},
+                              {"name" : "Garnish", "options" : ["Orange", "Lime", "Cherry", "Olive"]}],
+        }
     }
 }
 </script>
