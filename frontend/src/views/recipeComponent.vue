@@ -2,45 +2,14 @@
     <v-app>
         <v-container grid-list-lg fluid fill-height>
             <v-row justify="center">
-                <h1>{{sample_res[id].name}}</h1>
+                <h1>{{curDrink.dName}}</h1>
             </v-row>
             <v-row justify="center" class="mt-12">
                 <v-col cols="4">
                     <v-card>
                         <v-card-title>Ingredients</v-card-title>
                         <v-list expand>
-                            <v-list-group :value="false" prepend-icon="mdi-liquor">
-                                <template v-slot:activator>
-                                    <v-list-item-title>Liquors</v-list-item-title>
-                                </template>
-                                <v-list-item v-for="liq in sample_res[id].liquor" :key="liq">
-                                    <v-list-item-content>
-                                        <p>{{liq}}</p>
-                                    </v-list-item-content>
-                                </v-list-item>
-                            </v-list-group>
-                            <v-list-group :value="false" prepend-icon="mdi-spoon-sugar">
-                                <template v-slot:activator>
-                                    <v-list-item-title>Mixers</v-list-item-title>
-                                </template>
-                                <v-list-item v-for="mix in sample_res[id].mixer" :key="mix" v-text="mix"/>
-                            </v-list-group>
-                            <v-list-group :value="false" prepend-icon="mdi-bottle-tonic-outline">
-                                <template v-slot:activator>
-                                    <v-list-item-title>Bitters</v-list-item-title>
-                                </template>
-                                <v-list-item v-for="bit in sample_res[id].bitters" :key="bit">
-                                    {{bit}}
-                                </v-list-item>
-                            </v-list-group>
-                            <v-list-group :value="false" prepend-icon="mdi-fruit-citrus">
-                                <template v-slot:activator>
-                                    <v-list-item-title>Garnishes</v-list-item-title>
-                                </template>
-                                <v-list-item v-for="gar in sample_res[id].garnish" :key="gar">
-                                    {{gar}}
-                                </v-list-item>
-                            </v-list-group>
+                            <v-list-item v-for="i in curDrink.dIngredients" :key="i">{{i}}</v-list-item>
                         </v-list>
                     </v-card>
                 </v-col>
@@ -48,12 +17,12 @@
                     <v-card>
                         <v-container>
                             <h1>Instructions</h1>
-                            <p>{{sample_res[id].instructions}}</p>
+                            <p>{{curDrink.instructions}}</p>
                         </v-container>
                     </v-card>
                 </v-col>
                 <v-col cols="3">
-                    <v-img :src="sample_res[id].img"/>
+                    <v-img :src="curDrink.img"/>
                 </v-col>
             </v-row>
             <v-row justify="center" align="end">
@@ -64,16 +33,46 @@
 </template>
 <script>
 import router from '../router/index'
+const axios = require('axios')
+
+function preprocessDrink(drink){
+    let ingredients = []
+    let j = 1
+    do {
+        let ingredientString = ""
+        if (drink["strMeasure" + j] != null){
+            ingredientString = drink["strMeasure" + j] + " " + drink["strIngredient" + j]
+        } else {
+            ingredientString = drink["strIngredient" + j]
+        }
+        ingredients.push(ingredientString)
+        j++
+    }while(drink["strIngredient" + j] != null)
+    return {dName: drink["strDrink"],
+                        category: drink["strCategory"], 
+                        dIngredients: ingredients, 
+                        id: drink["idDrink"],
+                        img: drink["strDrinkThumb"],
+                        instructions: drink["strInstructions"]}
+}
+
 export default {
     props:{
-        id:Number
+        id : String
     },
     data() {
         return {
-            sample_res: [{name: "Old Fashioned", liquor: ["Whiskey", "Rye"], mixer: ["Simple Syrup"], bitters: ["Angostura"], garnish: ["Orange"], img: "https://www.thecocktaildb.com/images/media/drink/vrwquq1478252802.jpg", instructions: "Add the sugar and bitters to a rocks glass, then add the water, and stir until the sugar is nearly dissolved. Fill the glass with large ice cubes, add the bourbon, and gently stir to combine. Express the oil of an orange peel over the glass, then drop in.", id: 0},
-                        {name: "Martini", liquor: ["Gin", "Vodka"], mixer: ["Vermouth"], bitters: ["None"], garnish: ["Olive"], img: "https://www.thecocktaildb.com/images/media/drink/71t8581504353095.jpg", instructions: "Combine vodka and dry vermouth in a cocktail mixing glass. Fill with ice and stir until chilled. Strain into a chilled martini glass. Garnish with three olives on a toothpick.", id:1},
-                        {name: "Screwdriver", liquor: ["Vodka"], mixer: ["Orange Juice"], bitters: ["None"], garnish: ["Orange"], img: "https://www.thecocktaildb.com/images/media/drink/8xnyke1504352207.jpg", instructions: "Divide ice between 4 glasses. Add vodka and orange juice to a pitcher and stir. Pour over ice. Alternatively, instead of using a pitcher, divide the vodka and orange juice between 4 glasses — Each glass should have 2 ounces of vodka and about 3 ounces of orange juice. Stir well then place a few orange wedges into the middle of the glass.", id:2}],
+            curDrink: {dName: "",
+                        category: "", 
+                        dIngredients: [], 
+                        id: "",
+                        img: "",
+                        instructions: ""}
         }
+    },
+    async created(){
+        await axios.get("/api/search", {params: {id: this.id}})
+        .then(response => this.curDrink = preprocessDrink(response.data.drinks[0]))
     },
     methods: {
         backToSearch(){

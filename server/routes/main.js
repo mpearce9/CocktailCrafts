@@ -3,6 +3,7 @@ const controller = require('../controller/mainController');
 const router = express.Router();
 
 router.get('/populate', controller.getStart)
+router.get('/search', controller.drinkSearch)
 
 /*
 // error handler
