@@ -25,6 +25,7 @@
                         :items="apiDrinkList"
                         class="elevation-1 mx-16"
                         @click:row="rowClicked"
+                        no-data-text="No Drinks Found That Match Selected Criteria"
                     >
                     <template v-slot:item.dName="{item}">
                         <tr>
@@ -77,11 +78,6 @@ function preprocessApiDrinks(drinkArr){
     }
     return finalDrinkArr
 }
-
-async function getDrinkList(){
-    return await axios.get('/api/populate')
-            .then(response => preprocessApiDrinks(response.data.drinks))
-}
 export default  {
     
     components: {
@@ -100,7 +96,8 @@ export default  {
         }
     },
     async created() {
-        this.apiDrinkList = await getDrinkList()
+        await axios.get('/api/populate')
+            .then(response => this.apiDrinkList = preprocessApiDrinks(response.data.drinks))
     },
     methods: {
         rowClicked(value, info){
@@ -108,7 +105,12 @@ export default  {
         },
         async onNameSearch(search){
             await axios.get("/api/namesearch", {params: {name: search}})
-            .then(response => this.apiDrinkList = preprocessApiDrinks(response.data.drinks))
+            .then(response => {
+                if(response.data.drinks)
+                    this.apiDrinkList = preprocessApiDrinks(response.data.drinks)
+                else
+                    this.apiDrinkList = []
+            })
         }
     }
 }
