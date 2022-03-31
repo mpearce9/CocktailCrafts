@@ -13,7 +13,7 @@
                 </v-col>
             </v-row>
             <v-scroll-x-reverse-transition v-if="selected == 0" mode="in" :hide-on-leave="true">
-                <component :is="curComps[selected]" :option_searches="option_searches"/>
+                <component :is="curComps[selected]" @nameSearch="onNameSearch" :option_searches="option_searches"/>
             </v-scroll-x-reverse-transition>
             <v-scroll-x-transition v-else mode="in" :hide-on-leave="true">
                 <component :is="curComps[selected]" :option_searches="option_searches"/>
@@ -118,6 +118,10 @@ export default  {
         rowClicked(value, info){
             router.push({name: 'recipe', params: { id: value.id } })
         },
+        async onNameSearch(search){
+            await axios.get("/api/namesearch", {params: {name: search}})
+            .then(response => this.apiDrinkList = preprocessApiDrinks(response.data.drinks))
+        }
     }
 }
 </script>

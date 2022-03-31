@@ -71,7 +71,7 @@ export default {
         }
     },
     async created(){
-        await axios.get("/api/search", {params: {id: this.id}})
+        await axios.get("/api/idsearch", {params: {id: this.id}})
         .then(response => this.curDrink = preprocessDrink(response.data.drinks[0]))
     },
     methods: {

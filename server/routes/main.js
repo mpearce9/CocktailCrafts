@@ -3,7 +3,8 @@ const controller = require('../controller/mainController');
 const router = express.Router();
 
 router.get('/populate', controller.getStart)
-router.get('/search', controller.drinkSearch)
+router.get('/idsearch', controller.idDrinkSearch)
+router.get('/namesearch', controller.nameDrinkSearch)
 
 /*
 // error handler
