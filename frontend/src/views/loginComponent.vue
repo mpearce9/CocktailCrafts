@@ -5,7 +5,7 @@
       class="mb-8"
       no-gutters
     >
-      <v-col md="4" offset-md="1">
+      <v-col md="5" offset-md="0">
           <h1>join the <strong><span style = "font-size:1.75em; color:#1260cc;">fun</span></strong>.</h1>
           <v-card class = "logincard">
             <v-form
@@ -25,6 +25,9 @@
             :rules="passwordRules"
             label="Password"
             required
+            :append-icon= "pass1 ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
+            @click:append= "() => (pass1 = !pass1)"
+            :type="pass1 ? 'password' : 'text'"
             ></v-text-field>
 
             <v-btn
@@ -32,6 +35,15 @@
             >
             log in
             </v-btn>
+            <v-alert
+              :value="loginalert"
+              :type ="responselogalert"
+              dense
+              prominent
+              transition="scale-transition"
+              id = "loginalert"
+            >
+            </v-alert>
         </v-form>
         </v-card>
       </v-col>
@@ -40,7 +52,7 @@
         vertical
       ></v-divider>
       <v-col
-        md="4"
+        md="5"
         offset-md="0"
       >
       <v-card class = "logincard">
@@ -70,6 +82,9 @@
             :rules="passwordRules"
             label="Password"
             required
+            :append-icon= "pass ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
+            @click:append= "() => (pass = !pass)"
+            :type="pass ? 'password' : 'text'"
             ></v-text-field>
 
             <v-checkbox
@@ -84,6 +99,15 @@
             >
             join now
             </v-btn>
+            <v-alert
+              :value="signupalert"
+              :type ="responsealert"
+              dense
+              prominent
+              transition="scale-transition"
+              id = "signupalert"
+            >
+            </v-alert>
         </v-form>
         </v-card>
       </v-col>
@@ -96,17 +120,6 @@
 <script>
   import axios from 'axios';
   const apiClient = axios.create({ baseUrl: 'http://localhost:3000', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' } });
-  async function postData(url = '', data = {}) {
-  // Default options are marked with *
-  const response = await fetch(url, {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data) // body data type must match "Content-Type" header
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
-  }
   export default {
     data(){
         return{
@@ -116,6 +129,12 @@
         passwordbox:'',
         passwordbox1:'',
         namebox:'',
+        pass: String,
+        pass1: String,
+        signupalert:false,
+        responsealert:'',
+        loginalert:false,
+        responselogalert:'',
         emailRules: [
           v => !!v || 'E-mail is required',
           v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -133,57 +152,60 @@
       },
       methods:{
             loginUser(){
-                apiClient.get('/api/login', {
-                    email: this.email,
-                    password: this.password
+                apiClient.post('/api/login', {
+                    email: this.emailbox,
+                    password: this.passwordbox
                 })
                 .then(response => {
-                // JSON responses are automatically parsed.
-                    if(response.data.local){
-                        this.$message({
-                            message: 'Login Successful...',
-                            type: 'success'
-                        });
-                        this.setUserData(response.data.local);
-                        this.fullscreenLoading = false;
-                        this.$router.push({name: 'User'})
-                        
-                    }else{
-                        this.fullscreenLoading = false;
-                        this.errorMsg = response.data;
-                    }
-                   
+                  console.log(response.data);
+                  if(response.data == "success"){
+                      this.loginalert = true;
+                      this.responselogalert = "success";
+                      document.getElementById("loginalert").innerText = "Success, logging in now..";
+                      window.location.replace('http://localhost:3000/discover');
+                 }else{
+                     console.log(response.data);
+                     this.loginalert = true;
+                     this.responselogalert = "error";
+                     this.emailbox = '';
+                     this.passwordbox = '';
+                     document.getElementById("loginalert").innerText = "Email and password incorrect.";
+                 }  
                 })
-                .catch(e => {
-                    this.errors.push(e)
-                })
+                .catch(err => console.log(err));
             },
             signUp(){
-        //     apiClient.post('/api/signup', {
-        //         name: this.name,
-        //         email: this.emailbox1,
-        //         password: this.passwordbox1
-        //     })
-        //     .then(response => {
-        //         if(response.data.success){
-        //             console.log(response);
-        //         }else{
-        //             alert(response.data);
-        //         }
-        //     })
-        //     .catch(e => {
-        //         this.errors.push(e)
-        //     })
-        // }
-            postData("/api/signup", { "name":"cameron ownbey", "email":"cameron.ownbey@gmail.com", "password":"cam1234789" })
-            .then(response => console.log(response))
-            .then(data => {
-              console.log('Success:', data);
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
-      }
+             apiClient.post('/api/signup', {
+                 name: this.namebox,
+                 email: this.emailbox1,
+                 password: this.passwordbox1
+             })
+             .then(response => {
+                 if(response.data == "success"){
+                      this.signupalert = true;
+                      this.responsealert = "success";
+                      document.getElementById("signupalert").innerText = "Success, account created, please sign in";
+                      this.namebox = '';
+                      this.emailbox1 = '';
+                      this.passwordbox1 = '';
+                 }else{
+                     console.log(response.data);
+                     this.signupalert = true;
+                     this.responsealert = "error";
+                     this.namebox = '';
+                     this.emailbox1 = '';
+                     this.passwordbox1 = '';
+                     document.getElementById("signupalert").innerText = "Error creating account";
+                 } 
+             })
+             .catch(err => next(err));
+         }
       }
   }
 </script>
+
+<style scoped>
+#signupalert, #loginalert {
+    margin-top:5px;
+}
+</style>

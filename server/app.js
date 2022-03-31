@@ -6,14 +6,13 @@ const main = require('./routes/main');
 const { ppid } = require('process');
 const mongoose = require ('mongoose');
 const cors = require('cors');
-
-
+var bodyParser = require('body-parser');
 
 //create app 
 const app = express();
 
 //configure appm
-let port = 8081;
+let port = 3000;
 let host = 'localhost';
 app.set('view engine', 'ejs');
 
@@ -23,6 +22,8 @@ app.use(express.static('dist'));
 app.use(express.urlencoded({extended: true}));
 app.use(morgan('tiny'));
 app.use(methodOverride('_method'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use('/public', express.static('public'));
 
