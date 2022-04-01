@@ -37,12 +37,23 @@
             </v-btn>
             <v-alert
               :value="loginalert"
-              :type ="responselogalert"
+              type ="success"
               dense
               prominent
               transition="scale-transition"
               id = "loginalert"
             >
+            Success. Logging you in...
+            </v-alert>
+            <v-alert
+              :value="loginalertbad"
+              type ="error"
+              dense
+              prominent
+              transition="scale-transition"
+              id = "loginalertbad"
+            >
+            Error. Username or password incorrect.
             </v-alert>
         </v-form>
         </v-card>
@@ -101,12 +112,23 @@
             </v-btn>
             <v-alert
               :value="signupalert"
-              :type ="responsealert"
+              type ="success"
               dense
               prominent
               transition="scale-transition"
               id = "signupalert"
             >
+            Success. Account created, please log in.
+            </v-alert>
+            <v-alert
+              :value="signupalertbad"
+              type ="error"
+              dense
+              prominent
+              transition="scale-transition"
+              id = "signupalertbad"
+            >
+            Error creating account.
             </v-alert>
         </v-form>
         </v-card>
@@ -132,9 +154,9 @@
         pass: String,
         pass1: String,
         signupalert:false,
-        responsealert:'',
         loginalert:false,
-        responselogalert:'',
+        signupalertbad:false,
+        loginalertbad:false,
         emailRules: [
           v => !!v || 'E-mail is required',
           v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -160,16 +182,12 @@
                   console.log(response.data);
                   if(response.data == "success"){
                       this.loginalert = true;
-                      this.responselogalert = "success";
-                      document.getElementById("loginalert").innerText = "Success, logging in now..";
                       window.location.replace('http://localhost:3000/discover');
                  }else{
                      console.log(response.data);
-                     this.loginalert = true;
-                     this.responselogalert = "error";
+                     this.loginalertbad = true;
                      this.emailbox = '';
                      this.passwordbox = '';
-                     document.getElementById("loginalert").innerText = "Email and password incorrect.";
                  }  
                 })
                 .catch(err => console.log(err));
@@ -183,19 +201,15 @@
              .then(response => {
                  if(response.data == "success"){
                       this.signupalert = true;
-                      this.responsealert = "success";
-                      document.getElementById("signupalert").innerText = "Success, account created, please sign in";
                       this.namebox = '';
                       this.emailbox1 = '';
                       this.passwordbox1 = '';
                  }else{
                      console.log(response.data);
-                     this.signupalert = true;
-                     this.responsealert = "error";
+                     this.signupalertbad = true;
                      this.namebox = '';
                      this.emailbox1 = '';
                      this.passwordbox1 = '';
-                     document.getElementById("signupalert").innerText = "Error creating account";
                  } 
              })
              .catch(err => next(err));
@@ -205,7 +219,7 @@
 </script>
 
 <style scoped>
-#signupalert, #loginalert {
+#signupalert, #loginalert, #signupalertbad, #loginalertbad {
     margin-top:5px;
 }
 </style>
