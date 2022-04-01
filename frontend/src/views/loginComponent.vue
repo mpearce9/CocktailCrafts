@@ -182,10 +182,12 @@
                   console.log(response.data);
                   if(response.data == "success"){
                       this.loginalert = true;
+                      this.loginalertbad = false;
                       window.location.replace('http://localhost:3000/discover');
                  }else{
                      console.log(response.data);
                      this.loginalertbad = true;
+                     this.loginalert = false;
                      this.emailbox = '';
                      this.passwordbox = '';
                  }  
@@ -201,12 +203,14 @@
              .then(response => {
                  if(response.data == "success"){
                       this.signupalert = true;
+                      this.signupalertbad = false;
                       this.namebox = '';
                       this.emailbox1 = '';
                       this.passwordbox1 = '';
                  }else{
                      console.log(response.data);
                      this.signupalertbad = true;
+                     this.signupalert = false;
                      this.namebox = '';
                      this.emailbox1 = '';
                      this.passwordbox1 = '';
