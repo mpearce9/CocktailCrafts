@@ -24,13 +24,15 @@
                         :headers="apiHeaders"
                         :items="apiDrinkList"
                         class="elevation-1 mx-16"
+                        :loading="tableLoading"
+                        loading-text="Loading Drinks..."
                         @click:row="rowClicked"
                         no-data-text="No Drinks Found That Match Selected Criteria"
                     >
                     <template v-slot:item.dName="{item}">
                         <tr>
                             <td>
-                                <v-img max-height="128" max-width="160" contain :src="item.img" lazy-src="https://reactnative-examples.com/wp-content/uploads/2022/02/default-loading-image.png"/>
+                                <v-img max-height="128" max-width="128" class="mr-6 rounded-circle" contain :src="item.img" lazy-src="https://reactnative-examples.com/wp-content/uploads/2022/02/default-loading-image.png"/>
                             </td>
                             <td class="ml-4">{{item.dName}}</td>
                         </tr>
@@ -68,7 +70,7 @@ function preprocessApiDrinks(drinkArr){
             }
             ingredients.push(ingredientString)
             j++
-        }while(drinkArr[i]["strIngredient" + j] != null)
+        }while(drinkArr[i]["strIngredient" + j] != null && drinkArr[i]["strIngredient" + j] != "")
         finalDrinkArr.push({dName: drinkArr[i]["strDrink"],
                             category: drinkArr[i]["strCategory"], 
                             dIngredients: ingredients, 
@@ -92,24 +94,30 @@ export default  {
             apiHeaders: [{text: "Drink Name", align: "start", value: "dName"},
                         {text: "Category", value: "category"},
                         {text: "Ingredients", value: "dIngredients"}],
-            apiDrinkList: []
+            apiDrinkList: [],
+            tableLoading: true
         }
     },
     async created() {
         await axios.get('/api/populate')
-            .then(response => this.apiDrinkList = preprocessApiDrinks(response.data.drinks))
+            .then(response => {
+                    this.apiDrinkList = preprocessApiDrinks(response.data.drinks)
+                    this.tableLoading = false
+                })
     },
     methods: {
         rowClicked(value, info){
             router.push({name: 'recipe', params: { id: value.id } })
         },
         async onNameSearch(search){
+            this.tableLoading = true
             await axios.get("/api/namesearch", {params: {name: search}})
             .then(response => {
                 if(response.data.drinks)
                     this.apiDrinkList = preprocessApiDrinks(response.data.drinks)
                 else
                     this.apiDrinkList = []
+                this.tableLoading = false
             })
         }
     }
