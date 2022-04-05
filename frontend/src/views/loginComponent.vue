@@ -32,6 +32,7 @@
 
             <v-btn
             color="info" block @click="loginUser"
+            :disabled="!valid"
             >
             log in
             </v-btn>
@@ -40,6 +41,7 @@
               type ="success"
               dense
               prominent
+              dismissable
               transition="scale-transition"
               id = "loginalert"
             >
@@ -50,6 +52,7 @@
               type ="error"
               dense
               prominent
+              dismissable
               transition="scale-transition"
               id = "loginalertbad"
             >
@@ -70,7 +73,7 @@
           <h2 style = "text-align: center;">Don't have an account?</h2>
             <v-form
             ref="form1"
-            v-model="valid"
+            v-model="valid1"
             lazy-validation
         >
             <v-text-field
@@ -107,6 +110,7 @@
 
             <v-btn
             color="info" block @click="signUp"
+            :disabled="!valid1"
             >
             join now
             </v-btn>
@@ -115,6 +119,7 @@
               type ="success"
               dense
               prominent
+              dismissable
               transition="scale-transition"
               id = "signupalert"
             >
@@ -125,6 +130,7 @@
               type ="error"
               dense
               prominent
+              dismissable
               transition="scale-transition"
               id = "signupalertbad"
             >
@@ -145,7 +151,8 @@
   export default {
     data(){
         return{
-        valid: false,
+        valid: true,
+        valid1: true,
         emailbox: '',
         emailbox1:'',
         passwordbox:'',
@@ -163,7 +170,7 @@
         ],
         passwordRules:[
             v => !!v || 'Password is required',
-            v => (v && v.length >8) || 'Password must be more than 8 characters',
+            v => (v && v.length >6) || 'Password must be more than 6 characters',
         ],
         nameRules: [
           v => !!v || 'Name is required',
@@ -188,8 +195,9 @@
                      console.log(response.data);
                      this.loginalertbad = true;
                      this.loginalert = false;
-                     this.emailbox = '';
-                     this.passwordbox = '';
+                    //  this.emailbox = '';
+                    //  this.passwordbox = '';
+                     this.$refs.form.reset();
                  }  
                 })
                 .catch(err => console.log(err));
@@ -211,9 +219,10 @@
                      console.log(response.data);
                      this.signupalertbad = true;
                      this.signupalert = false;
-                     this.namebox = '';
-                     this.emailbox1 = '';
-                     this.passwordbox1 = '';
+                    //  this.namebox = '';
+                    //  this.emailbox1 = '';
+                    //  this.passwordbox1 = '';
+                     this.$refs.form.reset();
                  } 
              })
              .catch(err => next(err));

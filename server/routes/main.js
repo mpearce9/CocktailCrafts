@@ -9,6 +9,7 @@ router.post('/login', usercontroller.login)
 
 router.post('/signup', usercontroller.signup)
 
+router.get('/logininfo', usercontroller.getlogininfo)
 /*
 // error handler
 router.use(function(err, req, res, next) {

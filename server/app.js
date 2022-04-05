@@ -6,6 +6,8 @@ const main = require('./routes/main');
 const { ppid } = require('process');
 const mongoose = require ('mongoose');
 const cors = require('cors');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 var bodyParser = require('body-parser');
 
 //create app 
@@ -40,6 +42,22 @@ db.mongoose
     console.log("Cannot connect to the database!", err);
     process.exit();
   });
+app.use(
+    session({
+        secret: "cocktailcraftssecret",
+        resave: false,
+        saveUninitialized: false,
+        store: new MongoStore({mongoUrl: 'mongodb+srv://3155cluster:3155cluster%2E123@3155cluster.nh76s.mongodb.net/cocktailcrafts'}),
+        cookie: {maxAge: 60*60*1000}
+        })
+);
+
+app.use((req, res, next) => {
+    res.locals.user = req.session.user||null;
+    res.locals.name = req.session.name||null;
+    res.locals.email = req.session.email||null;
+    next();
+});
 
 //set up routes
 
@@ -47,6 +65,7 @@ db.mongoose
 
 //Import route files for coursedetails and index
 var routes = require('./routes/main.js');
+const { resourceLimits } = require('worker_threads');
 app.use(cors());
 app.use('/api/', routes);
 
