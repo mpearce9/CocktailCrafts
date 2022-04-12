@@ -1,28 +1,21 @@
 const express = require('express');
 const controller = require('../controller/mainController');
 const router = express.Router();
+const usercontroller = require('../controller/user.controller');
 
-router.get('/', function (req, res) {
-    res.sendFile('../dist/index.html')
-});
+router.get('/populate', controller.getStart)
 
-router.get('/home', function (req, res) {
-    res.render('home');
-});
+router.post('/login', usercontroller.login)
 
-router.get('/about', function (req, res) {
-    res.render('aboutUs');
-});
+router.post('/signup', usercontroller.signup)
 
-router.get('/contact', function (req, res) {
-    res.render('contactUs');
-});
-
-
+router.get('/logininfo', usercontroller.getlogininfo)
+/*
 // error handler
 router.use(function(err, req, res, next) {
   console.log('error handling');
   res.status(err.status || 500);
   res.render('error',{error:err,message:err.message,url:req.url});
 });
+*/
 module.exports = router;

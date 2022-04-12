@@ -21,31 +21,11 @@
             <v-row justify="center">
                 <v-col>
                     <v-data-table
-                        :headers="sample_res_headers"
-                        :items="sample_res"
+                        :headers="apiHeaders"
+                        :items="apiDrinkList"
                         class="elevation-1 mx-16"
                         @click:row="rowClicked"
                     >
-                    <template v-slot:item.liquor="{item}">
-                        <v-list>
-                            <v-list-item v-for="l in item.liquor" :key="l">{{l}}</v-list-item>
-                        </v-list>
-                    </template>
-                    <template v-slot:item.mixer="{item}">
-                        <v-list>
-                            <v-list-item v-for="m in item.mixer" :key="m">{{m}}</v-list-item>
-                        </v-list>
-                    </template>
-                    <template v-slot:item.bitters="{item}">
-                        <v-list>
-                            <v-list-item v-for="b in item.bitters" :key="b">{{b}}</v-list-item>
-                        </v-list>
-                    </template>
-                    <template v-slot:item.garnish="{item}">
-                        <v-list>
-                            <v-list-item v-for="g in item.garnish" :key="g">{{g}}</v-list-item>
-                        </v-list>
-                    </template>
                     </v-data-table>
                 </v-col>
             </v-row>
@@ -54,14 +34,25 @@
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core'
 import IngredientSearch from '../components/IngredientSearch.vue'
 import NameSearch from '../components/NameSearch.vue'
 import router from '../router/index'
+const axios = require('axios')
 export default  {
     
     components: {
         IngredientSearch,
         NameSearch
+    },
+    computed: {
+        apiDrinkList: function(){
+            axios.get('/api/populate')
+            .then(function(response){
+                console.log(response.data.drinks[0]);
+                return response.data.drinks
+            })
+        }
     },
     data() {
         return {
@@ -78,9 +69,10 @@ export default  {
                         {name: "Martini", liquor: ["Gin", "Vodka"], mixer: ["Vermouth"], bitters: ["None"], garnish: ["Olive"], instructions: "Combine vodka and dry vermouth in a cocktail mixing glass. Fill with ice and stir until chilled. Strain into a chilled martini glass. Garnish with three olives on a toothpick.", id:1},
                         {name: "Screwdriver", liquor: ["Vodka"], mixer: ["Orange Juice"], bitters: ["None"], garnish: ["Orange"], instructions: "Divide ice between 4 glasses. Add vodka and orange juice to a pitcher and stir. Pour over ice. Alternatively, instead of using a pitcher, divide the vodka and orange juice between 4 glasses — Each glass should have 2 ounces of vodka and about 3 ounces of orange juice. Stir well then place a few orange wedges into the middle of the glass.", id:2}],
             curComps: [NameSearch, IngredientSearch],
-            selected: 0
+            selected: 0,
+            apiHeaders: [{text: "Drink Name", align: "start", value: "strDrink"},
+                        {text: "Ingredient 1", value: "strIngredient1"}]
         }
-        
     },
     methods: {
         rowClicked(value, info){
