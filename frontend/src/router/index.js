@@ -39,6 +39,16 @@ const routes = [
         name: "recipe",
         props: true,
         component: () => import('../views/recipeComponent')
+    }, 
+    {
+        path: '/accountdetails',
+        name: 'Account Details',
+        component: () => import('../views/accountDetailsComponent')    
+    },
+    {
+        path: '/contact',
+        name: 'Contact',
+        component: () => import('../views/contactComponent')
     }
 
 ]
