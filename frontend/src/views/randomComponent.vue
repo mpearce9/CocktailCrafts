@@ -53,6 +53,9 @@ function preprocessDrink(drink){
 
     do {
         let ingredientString = ""
+        if(drink["strIngredient" + j] === "") // Should prevent empty strings from appearing.
+            break;
+        
         if (drink["strMeasure" + j] != null){
             ingredientString = drink["strMeasure" + j] + " " + drink["strIngredient" + j]
         } else {
@@ -60,8 +63,8 @@ function preprocessDrink(drink){
         }
         ingredients.push(ingredientString)
         j++
-    } while (drink["strIngredient" + j] != null) // Elderflower Caipirinha has a lot of empty spaces, So does Gin Tonic
-    return { // Sometimes Buttons are hidden when ingredient list is long
+    } while (drink["strIngredient" + j] != null) // Elderflower Caipirinha had a lot of empty spaces, So did Gin Tonic
+    return {
         dName: drink["strDrink"],
         category: drink["strCategory"], 
         dIngredients: ingredients, 
