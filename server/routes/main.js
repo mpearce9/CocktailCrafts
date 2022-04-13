@@ -4,6 +4,8 @@ const router = express.Router();
 const usercontroller = require('../controller/user.controller');
 
 router.get('/populate', controller.getStart)
+router.get('/idsearch', controller.idDrinkSearch)
+router.get('/namesearch', controller.nameDrinkSearch)
 
 router.post('/login', usercontroller.login)
 
