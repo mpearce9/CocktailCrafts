@@ -16,7 +16,7 @@
                 <component :is="curComps[selected]" @nameSearch="onNameSearch"/>
             </v-scroll-x-reverse-transition>
             <v-scroll-x-transition v-else mode="in" :hide-on-leave="true">
-                <component :is="curComps[selected]" @nameSearch="onNameSearch"/>
+                <component :is="curComps[selected]" :ingredient_options="ingredientsList" @ingredientSearch="onIngredientSearch"/>
             </v-scroll-x-transition>
             <v-row justify="center">
                 <v-col>
@@ -80,6 +80,26 @@ function preprocessApiDrinks(drinkArr){
     }
     return finalDrinkArr
 }
+
+function getFullDetails(drinkArr){
+    let fullDetailArr = []
+    for(let i = 0; i < drinkArr.length; i++){
+        axios.get('/api/idsearch', {params: {id: drinkArr[i]["idDrink"]}})
+            .then(response => {
+                console.log(response.data.drinks);
+                fullDetailArr.push(preprocessApiDrinks(response.data.drinks)[0])
+            })
+    }
+    return fullDetailArr
+}
+
+function preprocessIngredientsList(ingArr){
+    let finalIngArr = []
+    for(let i = 0; i<ingArr.length; i++){
+        finalIngArr.push(ingArr[i]["strIngredient1"])
+    }
+    return finalIngArr.sort()
+}
 export default  {
     
     components: {
@@ -95,6 +115,7 @@ export default  {
                         {text: "Category", value: "category"},
                         {text: "Ingredients", value: "dIngredients"}],
             apiDrinkList: [],
+            ingredientsList: [],
             tableLoading: true
         }
     },
@@ -104,6 +125,10 @@ export default  {
                     this.apiDrinkList = preprocessApiDrinks(response.data.drinks)
                     this.tableLoading = false
                 })
+        await axios.get('/api/getIngredients')
+            .then(response => {
+                this.ingredientsList = preprocessIngredientsList(response.data.drinks)
+            })
     },
     methods: {
         rowClicked(value, info){
@@ -115,6 +140,17 @@ export default  {
             .then(response => {
                 if(response.data.drinks)
                     this.apiDrinkList = preprocessApiDrinks(response.data.drinks)
+                else
+                    this.apiDrinkList = []
+                this.tableLoading = false
+            })
+        },
+        async onIngredientSearch(search){
+            this.tableLoading = true
+            await axios.get("/api/ingredientSearch", {params: {ingredient: search}})
+            .then(response => {
+                if(response.data.drinks)
+                    this.apiDrinkList = getFullDetails(response.data.drinks)
                 else
                     this.apiDrinkList = []
                 this.tableLoading = false

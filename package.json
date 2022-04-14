@@ -15,7 +15,8 @@
   "scripts": {
     "postinstall": "cd frontend && npm install && cd ../server && npm install",
     "start": "cd frontend && npm run build && cd ../server && node app",
-    "serve": "cd frontend && npm run serve"
+    "serve": "cd frontend && npm run serve",
+    "server": "cd server && node app"
   },
   "proxy": "http://localhost:5000"
 }
