@@ -1,4 +1,5 @@
 //require modules
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const main = require('./routes/main');
@@ -64,7 +65,7 @@ app.use(cors());
 app.use('/api/', routes);
 
 app.get('/*', (req, res)=> {
-    res.sendFile(__dirname + '/dist/index.html')
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
 
 
