@@ -14,7 +14,7 @@ var bodyParser = require('body-parser');
 const app = express();
 
 //configure appm
-let port = 3000;
+let port = process.env.PORT || 3000;
 let host = 'localhost';
 app.set('view engine', 'ejs');
 
@@ -93,6 +93,6 @@ app.use((err, req, res, next)=>{
 });
 
 //start the server
-app.listen(port, host, ()=>{
+app.listen(port, ()=>{
     console.log('Server is running on port', port);
 })
