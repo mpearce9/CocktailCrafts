@@ -47,6 +47,7 @@ app.use(
         secret: "cocktailcraftssecret",
         resave: false,
         saveUninitialized: false,
+        // change to run locally
         store: new MongoStore({mongoUrl: 'mongodb+srv://3155cluster:3155cluster%2E123@3155cluster.nh76s.mongodb.net/cocktailcrafts'}),
         cookie: {maxAge: 60*60*1000}
         })
