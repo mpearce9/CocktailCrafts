@@ -80,6 +80,7 @@ app.use((err, req, res, next)=>{
         err.status = 500;
         err.message = ("Internal server error");
     }
+    console.log("error", err);
     res.status(err.status).json({error: err});
 });
 
