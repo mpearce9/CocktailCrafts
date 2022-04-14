@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build --dest ../server/dist",
+    "lint": "vue-cli-service lint"
+  },
   "dependencies": {
     "axios": "^0.26.1",
     "connect-mongo": "^4.6.0",
