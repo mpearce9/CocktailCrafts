@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: buildFrontend
-        run: make build
+        run: cd frontend && npm install && npm run build
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           appdir: server
