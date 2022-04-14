@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: buildFrontend
-        run: ./deploy.sh
+        run: make build
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           appdir: server
