@@ -6,6 +6,8 @@ const usercontroller = require('../controller/user.controller');
 router.get('/populate', controller.getStart)
 router.get('/idsearch', controller.idDrinkSearch)
 router.get('/namesearch', controller.nameDrinkSearch)
+router.get('/getIngredients', controller.getIngredients)
+router.get('/ingredientSearch', controller.ingredientDrinkSearch)
 
 router.post('/login', usercontroller.login)
 

@@ -31,7 +31,6 @@
     dark
     padless
     color = "rgb(15,12,12)"
-    fixed
   >
     <v-row
       justify="center"
