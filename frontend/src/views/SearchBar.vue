@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core'
 import IngredientSearch from '../components/IngredientSearch.vue'
 import NameSearch from '../components/NameSearch.vue'
 import router from '../router/index'
