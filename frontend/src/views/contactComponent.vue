@@ -18,9 +18,9 @@
           <input type="email" size="20" style="box-shadow: 1px 1px 2px 2px; color:black" placeholder=" john@example.com" />
           <br> <br>
           <p style="color:white">Question: </p>
-          <input type="text" size="20" style="box-shadow: 1px 1px 2px 2px; color:black" />
-          <br> <br>
+          <v-textarea name="input-7-1" class="my-textarea" style="width:250px; margin:auto" height="10" background-color="white" color="black" outlined></v-textarea>
           <v-btn color = "info">Submit</v-btn>
+          <p>&nbsp &nbsp</p>
         </form>
 
       </v-col>
@@ -40,5 +40,9 @@
     padding: 4px 16px;
     margin: 12px;
   }
+
+  .my-textarea textarea { 
+    color: black !important;
+    }
 </style>
 diff --git a/frontend/src/views/accountDetailsComponent.vue b/frontend/src/views/accountDetailsComponent.vue
