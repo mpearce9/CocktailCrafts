@@ -147,7 +147,7 @@
 
 <script>
   import axios from 'axios';
-  const apiClient = axios.create({ baseUrl: 'http://localhost:3000', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' } });
+  const apiClient = axios.create({ headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' } });
   export default {
     data(){
         return{
@@ -190,7 +190,7 @@
                   if(response.data == "success"){
                       this.loginalert = true;
                       this.loginalertbad = false;
-                      window.location.replace('http://localhost:3000/discover');
+                      window.location.replace('/discover');
                  }else{
                      console.log(response.data);
                      this.loginalertbad = true;
