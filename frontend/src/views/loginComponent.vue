@@ -190,7 +190,7 @@
                   if(response.data == "success"){
                       this.loginalert = true;
                       this.loginalertbad = false;
-                      window.location.replace('/discover');
+                      window.location.replace('/account');
                  }else{
                      console.log(response.data);
                      this.loginalertbad = true;
