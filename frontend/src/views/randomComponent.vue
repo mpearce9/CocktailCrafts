@@ -92,7 +92,7 @@ export default {
         }
     },
     async created(){
-        await axios.get("https://www.thecocktaildb.com/api/json/v1/1/random.php")
+        await axios.get("https://www.thecocktaildb.com/api/json/v2/9973533/random.php")
         .then(response => this.curDrink = preprocessDrink(response.data.drinks[0]))
     },
     methods: {
