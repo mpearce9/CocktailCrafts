@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 exports.getStart = (req, res)=>{
-    axios.get('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a')
+    axios.get('https://www.thecocktaildb.com/api/json/v2/9973533/latest.php')
     .then(function (response) {
         res.json(response.data);
     })
@@ -11,7 +11,7 @@ exports.getStart = (req, res)=>{
 };
 
 exports.idDrinkSearch = (req, res)=>{
-    axios.get("https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + req.query.id)
+    axios.get("https://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=" + req.query.id)
     .then(function (response) {
         res.json(response.data);
     })
@@ -21,7 +21,7 @@ exports.idDrinkSearch = (req, res)=>{
 }
 
 exports.nameDrinkSearch = (req, res)=> {
-    axios.get("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + req.query.name)
+    axios.get("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=" + req.query.name)
     .then(function (response) {
         res.json(response.data);
     })

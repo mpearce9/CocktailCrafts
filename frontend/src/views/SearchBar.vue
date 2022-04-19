@@ -25,17 +25,13 @@
                         :items="apiDrinkList"
                         class="elevation-1 mx-16"
                         :loading="tableLoading"
+                        :items-per-page="5"
                         loading-text="Loading Drinks..."
                         @click:row="rowClicked"
                         no-data-text="No Drinks Found That Match Selected Criteria"
                     >
-                    <template v-slot:item.dName="{item}">
-                        <tr>
-                            <td>
-                                <v-img max-height="128" max-width="128" class="mr-6 rounded-circle" contain :src="item.img" lazy-src="https://reactnative-examples.com/wp-content/uploads/2022/02/default-loading-image.png"/>
-                            </td>
-                            <td class="ml-4">{{item.dName}}</td>
-                        </tr>
+                    <template v-slot:item.img="{item}">
+                        <v-img max-height="128" max-width="128" class="rounded-circle" contain :src="item.img" lazy-src="https://reactnative-examples.com/wp-content/uploads/2022/02/default-loading-image.png"/>
                     </template>
                     <template v-slot:item.dIngredients="{item}">
                         <v-list>
@@ -91,7 +87,8 @@ export default  {
         return {  
             curComps: [NameSearch, IngredientSearch],
             selected: 0,
-            apiHeaders: [{text: "Drink Name", align: "start", value: "dName"},
+            apiHeaders: [{text: "", align: "start", value: "img", sortable: false},
+                        {text: "Drink Name", value: "dName"},
                         {text: "Category", value: "category"},
                         {text: "Ingredients", value: "dIngredients"}],
             apiDrinkList: [],
@@ -123,9 +120,8 @@ export default  {
     }
 }
 </script>
-
 <style scoped>
-.v-list {
-    background: none
+.v-list{
+    background: none !important;
 }
 </style>
