@@ -54,6 +54,11 @@ const routes = [
         path: '/random',
         name: 'Random',
         component: () => import('../views/randomComponent')
+    },
+    {
+        path: '/savedCocktails',
+        name: 'Saved Cocktails',
+        component: () => import('../views/SavedCocktails')
     }
 
 ]
