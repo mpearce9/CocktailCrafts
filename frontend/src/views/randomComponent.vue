@@ -7,7 +7,17 @@
             <v-row justify="center" class="mt-12">
                 <v-col cols="4">
                     <v-card>
-                        <v-card-title>Ingredients</v-card-title>
+                        <v-card-title>Ingredients
+                             <v-btn
+                            icon
+                            color="pink"
+                            @click = "favorite"
+                            >
+                            <v-icon dark id = "favicon">
+                                {{curIcon}}
+                            </v-icon>
+                            </v-btn>
+                        </v-card-title>
                         <v-list expand>
                             <v-list-item v-for="i in curDrink.dIngredients" :key="i">{{i}}</v-list-item>
                         </v-list>
@@ -81,19 +91,41 @@ export default {
     },
     data() {
         return {
-            curDrink: {
-                dName: "",
-                category: "",
-                dIngredients: [],
-                id: "",
-                img: "",
-                instructions: ""
-            }
+        favBoolean: '',
+        curIcon: "",
+        curDrink: {dName: "",
+            category: "", 
+            dIngredients: [], 
+            id: "",
+            img: "",
+            instructions: ""},
+        useremail: '',
         }
     },
     async created(){
         await axios.get("https://www.thecocktaildb.com/api/json/v1/1/random.php")
         .then(response => this.curDrink = preprocessDrink(response.data.drinks[0]))
+
+        await axios.get("/api/logininfo")
+        .then(response => {
+            console.log(response.data);
+            if(response.data.email){
+                return  this.useremail = response.data.email;
+            }
+            else
+                return this.useremail = "UnknownUser"
+        })
+
+        await axios.get("/api/isfavorite/" + this.curDrink.id)
+        .then(response => {
+            console.log(response.data);
+            if(response.data.length > 0){
+                this.favBoolean = true;
+            }
+            else
+                this.favBoolean = false;
+        })
+        return this.curIcon = this.favBoolean ? "mdi-heart" : "mdi-heart-outline";
     },
     methods: {
         backToAccount(){
@@ -101,6 +133,30 @@ export default {
         },
         backToRandom(){
             window.location.reload();
+        },
+        favorite(){
+            this.favBoolean = !this.favBoolean;
+            this.curIcon = this.favBoolean ? "mdi-heart" : "mdi-heart-outline";
+            console.log(this.curDrink);
+            console.log(this.useremail);
+            if(this.favBoolean){
+                axios.post("/api/favorite",{
+                name: this.curDrink.dName, ingredients: this.curDrink.dIngredients, category: this.curDrink.category, cocktailid: this.curDrink.id, img: this.curDrink.img, instructions: this.curDrink.instructions, useremail: this.useremail
+                })
+                .then(response =>{
+                    console.log(response);
+                })
+                .catch(err => console.log(err));
+            }
+            else{
+                axios.post("/api/unfavorite",{
+                    name: this.curDrink.dName, ingredients: this.curDrink.dIngredients, category: this.curDrink.category, cocktailid: this.curDrink.id, img: this.curDrink.img, instructions: this.curDrink.instructions, useremail: this.useremail
+                })
+                .then(response =>{
+                    console.log(response);
+                })
+                .catch(err => console.log(err));
+            }
         }
     }
 }

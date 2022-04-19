@@ -195,8 +195,6 @@
                      console.log(response.data);
                      this.loginalertbad = true;
                      this.loginalert = false;
-                    //  this.emailbox = '';
-                    //  this.passwordbox = '';
                      this.$refs.form.reset();
                  }  
                 })
@@ -219,9 +217,6 @@
                      console.log(response.data);
                      this.signupalertbad = true;
                      this.signupalert = false;
-                    //  this.namebox = '';
-                    //  this.emailbox1 = '';
-                    //  this.passwordbox1 = '';
                      this.$refs.form.reset();
                  } 
              })

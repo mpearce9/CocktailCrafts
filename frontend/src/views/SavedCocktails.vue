@@ -2,7 +2,7 @@
     <v-app>
         <v-container grid-list-lg fill-width fluid>
             <v-row justify="center">
-                <h1>Saved Cocktails</h1>
+                <h1>{{user}} Saved Cocktails</h1>
             </v-row>
             <v-row justify="center">
                 <v-col>
@@ -12,6 +12,8 @@
                         class="elevation-1 mx-16"
                         @click:row="rowClicked"
                         no-data-text="No Saved Drinks"
+                        :loading="tableLoading"
+                        loading-text="Loading Saved Drinks..."
                     >
                     <template v-slot:item.dName="{item}">
                         <tr>
@@ -34,12 +36,63 @@
 </template>
 
 <script>
+import axios from 'axios'
+import router from '../router/index'
+
+function processSavedRecipes(drinkArr){
+    let finalDrinkArr = []
+    for(let i = 0; i < drinkArr.length; i++){
+        let j = 1
+        do {
+            j++
+        }while(drinkArr[i]["strIngredient" + j] != null && drinkArr[i]["strIngredient" + j] != "")
+        finalDrinkArr.push({dName: drinkArr[i]["name"],
+                            category: drinkArr[i]["category"], 
+                            dIngredients: drinkArr[i]["ingredients"],
+                            id: drinkArr[i]["cocktailid"],
+                            img: drinkArr[i]["img"],
+                            instructions: drinkArr[i]["instructions"]})
+    }
+    return finalDrinkArr
+}
+
 export default  {
+    async created() {
+        await axios.get("/api/logininfo")
+        .then(response => {
+            if(response.data.email){
+                console.log(response.data);
+                this.user = response.data.name + "'s";
+                return  this.useremail = response.data.email;
+            }
+            else
+                this.user = ""
+                return this.useremail = "unknown"
+        })
+
+        await axios.get("/api/listfavorites")
+        .then(response => {
+            if(response.data){
+                console.log(response.data);
+                this.apiDrinkList = processSavedRecipes(response.data);
+                console.log(this.apiDrinkList);
+                this.tableloading = false;
+            }
+            else{
+                console.log("fail");
+            }
+        })
+    },
     data() {
         return {  
             apiHeaders: [{text: "Drink Name", align: "start", value: "dName"},
                         {text: "Category", value: "category"},
                         {text: "Ingredients", value: "dIngredients"}],
+            useremail: '',
+            user: '',
+            apiDrinkList:[],
+            ingredientsList: [],
+            tableloading: true,
         }
     },
     methods: {
