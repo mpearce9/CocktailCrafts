@@ -11,7 +11,7 @@ exports.getStart = (req, res)=>{
 };
 
 exports.getIngredients = (req, res) => {
-    axios.get("https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list")
+    axios.get("https://www.thecocktaildb.com/api/json/v2/9973533/list.php?i=list")
     .then(function (response) {
         res.json(response.data);
     })
@@ -41,7 +41,8 @@ exports.nameDrinkSearch = (req, res)=> {
 }
 
 exports.ingredientDrinkSearch = (req, res) => {
-    axios.get("https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=" + req.query.ingredient)
+    console.log(req.query.ingredients);
+    axios.get("https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=" + req.query.ingredients)
     .then(function (response) {
         res.json(response.data);
     })

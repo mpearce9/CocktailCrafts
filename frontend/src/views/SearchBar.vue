@@ -144,9 +144,19 @@ export default  {
         },
         async onIngredientSearch(search){
             this.tableLoading = true
-            await axios.get("/api/ingredientSearch", {params: {ingredient: search}})
+
+            let searchString = ""
+            for(let i = 0; i<search.length; i++){
+                if(i != search.length - 1){
+                    searchString += search[i] + ","
+                } else {
+                    searchString += search[i]
+                }
+            }
+            
+            await axios.get("/api/ingredientSearch", {params: {ingredients: searchString}})
             .then(response => {
-                if(response.data.drinks)
+                if(typeof(response.data.drinks) == "object" && response.data.drinks)
                     this.apiDrinkList = getFullDetails(response.data.drinks)
                 else
                     this.apiDrinkList = []
