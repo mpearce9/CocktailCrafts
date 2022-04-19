@@ -1,9 +1,38 @@
 {
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "axios": "^0.26.1",
+    "connect-mongo": "^4.6.0",
+    "core-js": "^3.8.3",
+    "cors": "^2.8.5",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
-    "express-vue": "^5.16.0"
+    "express-session": "^1.17.2",
+    "method-override": "^3.0.0",
+    "mongodb": "^4.4.1",
+    "mongoose": "^6.2.10",
+    "morgan": "^1.10.0",
+    "vue": "^2.6.14",
+    "vue-async-computed": "^3.9.0",
+    "vue-router": "^3.5.3",
+    "vuetify": "^2.6.0"
   },
-  "proxy": "http://localhost:5000"
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-vuetify": "~2.4.8",
+    "vue-template-compiler": "^2.6.14",
+    "vuetify-loader": "^1.7.0"
+  }
 }

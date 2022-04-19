@@ -1,7 +1,7 @@
 //require modules
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
-const methodOverride = require('method-override');
 const main = require('./routes/main');
 const { ppid } = require('process');
 const mongoose = require ('mongoose');
@@ -14,20 +14,14 @@ var bodyParser = require('body-parser');
 const app = express();
 
 //configure appm
-let port = 3000;
-let host = 'localhost';
-app.set('view engine', 'ejs');
+let port = process.env.PORT || 3001;
 
 //mount middleware
-app.use(express.static('public'));
 app.use(express.static('dist'));
 app.use(express.urlencoded({extended: true}));
 app.use(morgan('tiny'));
-app.use(methodOverride('_method'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-app.use('/public', express.static('public'));
 
 const db = require("./models");
 db.mongoose
@@ -47,6 +41,7 @@ app.use(
         secret: "cocktailcraftssecret",
         resave: false,
         saveUninitialized: false,
+        // change to run locally
         store: new MongoStore({mongoUrl: 'mongodb+srv://3155cluster:3155cluster%2E123@3155cluster.nh76s.mongodb.net/cocktailcrafts'}),
         cookie: {maxAge: 60*60*1000}
         })
@@ -70,28 +65,19 @@ app.use(cors());
 app.use('/api/', routes);
 
 app.get('/*', (req, res)=> {
-    res.sendFile(__dirname + '/dist/index.html')
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
-
-app.listen(3000);
-
-
-app.use((req, res, next)=> {
-    let err = new Error('The server cannot locate ' + req.url);
-    err.status = 404;
-    next(err);
-});
 
 app.use((err, req, res, next)=>{
     if(!err.status) {
         err.status = 500;
         err.message = ("Internal server error");
     }
-    res.status(err.status);
-    res.render('error', {error: err});
+    console.log("error", err);
+    res.status(err.status).json({error: err});
 });
 
 //start the server
-app.listen(port, host, ()=>{
+app.listen(port, ()=>{
     console.log('Server is running on port', port);
 })
