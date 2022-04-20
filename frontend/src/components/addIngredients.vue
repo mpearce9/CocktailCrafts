@@ -5,7 +5,7 @@
                     <v-select :items="option.options" :label="option.name" dense outlined multiple chips deletable-chips :menu-props="{offsetY: true}"/>
                 </v-col>
                 <v-col cols="2">
-                    <v-btn color="secondary" dark block>Add</v-btn>
+                    <v-btn color="secondary" dark block href = "/added" >Add</v-btn>
                 </v-col>
             </v-row>
     </v-container>
