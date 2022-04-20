@@ -55,6 +55,9 @@
                     </v-data-table>
                 </v-col>
           </div>
+          <div>
+          <v-btn color = "info" href = "/add">ADD INGREDIENTS</v-btn>
+          </div>
         </v-card>
     </v-row>
     </v-container>

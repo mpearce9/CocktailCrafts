@@ -54,6 +54,11 @@ const routes = [
         path: '/barShelf',
         name: 'BarShelf',
         component: () => import('../views/barShelf')
+    },
+    {
+        path: '/add',
+        name: 'Add',
+        component: () => import('../views/add')
     }
 
 ]
