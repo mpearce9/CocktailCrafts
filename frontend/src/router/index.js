@@ -49,11 +49,6 @@ const routes = [
         path: '/contact',
         name: 'Contact',
         component: () => import('../views/contactComponent')
-    },
-    {
-        path: '/random',
-        name: 'Random',
-        component: () => import('../views/randomComponent')
     }
 
 ]
