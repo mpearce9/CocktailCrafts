@@ -1,2 +1,8 @@
 node_modules
+/frontend/node_modules
+/server/node_modules/*
+/server/dist/*
+/server/dist/*/*
 .vscode
+package.json
+package-lock.json
