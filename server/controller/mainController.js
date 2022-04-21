@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 exports.getStart = (req, res)=>{
-    axios.get('https://www.thecocktaildb.com/api/json/v2/9973533/latest.php')
+    axios.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?a=Alcoholic')
     .then(function (response) {
         res.json(response.data);
     })

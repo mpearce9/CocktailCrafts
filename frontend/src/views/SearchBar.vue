@@ -59,15 +59,17 @@ function preprocessApiDrinks(drinkArr){
     return finalDrinkArr
 }
 
-function getFullDetails(drinkArr){
+async function getFullDetails(drinkArr){
     let fullDetailArr = []
+    let promises = []
     for(let i = 0; i < drinkArr.length; i++){
-        axios.get('/api/idsearch', {params: {id: drinkArr[i]["idDrink"]}})
+        promises.push(axios.get('/api/idsearch', {params: {id: drinkArr[i]["idDrink"]}})
             .then(response => {
-                console.log(response.data.drinks);
                 fullDetailArr.push(preprocessApiDrinks(response.data.drinks)[0])
-            })
+            }))
     }
+    await Promise.all(promises).then(() => {
+        console.log(fullDetailArr)})
     return fullDetailArr
 }
 
@@ -100,15 +102,29 @@ export default  {
         }
     },
     async created() {
-        await axios.get('/api/populate')
-            .then(response => {
-                    this.apiDrinkList = preprocessApiDrinks(response.data.drinks)
-                    this.tableLoading = false
+        if(localStorage.getItem('drink-list')){
+            this.apiDrinkList = JSON.parse(localStorage.getItem('drink-list'))
+            this.tableLoading = false
+        } else {
+            let fullResponse = ""
+            await axios.get('/api/populate')
+                .then(response => {
+                    fullResponse = response.data.drinks        
                 })
-        await axios.get('/api/getIngredients')
-            .then(response => {
-                this.ingredientsList = preprocessIngredientsList(response.data.drinks)
-            })
+            let finalList = await getFullDetails(fullResponse)
+            this.apiDrinkList = finalList//preprocessApiDrinks(response.data.drinks)
+            localStorage.setItem('drink-list', JSON.stringify(this.apiDrinkList))
+            this.tableLoading = false   
+        }
+        if(localStorage.getItem('ingredient-list')){
+            this.ingredientsList = JSON.parse(localStorage.getItem('ingredient-list'))
+        } else {
+            await axios.get('/api/getIngredients')
+                .then(response => {
+                    this.ingredientsList = preprocessIngredientsList(response.data.drinks)
+                    localStorage.setItem('ingredient-list', JSON.stringify(this.ingredientsList))
+                })
+        }
     },
     methods: {
         rowClicked(value){
@@ -137,14 +153,16 @@ export default  {
                 }
             }
             
+            let fullResponse = ""
             await axios.get("/api/ingredientSearch", {params: {ingredients: searchString}})
             .then(response => {
-                if(typeof(response.data.drinks) == "object" && response.data.drinks)
-                    this.apiDrinkList = getFullDetails(response.data.drinks)
-                else
-                    this.apiDrinkList = []
-                this.tableLoading = false
+                fullResponse = response.data.drinks
             })
+            if(typeof(fullResponse) == "object" && fullResponse)
+                this.apiDrinkList = await getFullDetails(fullResponse)
+            else
+                this.apiDrinkList = []
+            this.tableLoading = false
         }
     }
 }

@@ -5,7 +5,7 @@
             :items="apiDrinkList"
             class="elevation-1 mx-16"
             :loading="tableLoading"
-            :items-per-page="5"
+            :items-per-page="10"
             loading-text="Loading Drinks..."
             @click:row="rowClicked"
             no-data-text="No Drinks Found That Match Selected Criteria"
