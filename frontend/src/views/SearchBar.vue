@@ -20,7 +20,7 @@
             </v-scroll-x-transition>
             <v-row justify="center">
                 <v-col>
-                    <DrinkTable :apiDrinkList="apiDrinkList" :tableLoading="tableLoading" @row-clicked="rowClicked"/>
+                    <component :is="curComps[2]" :apiDrinkList="apiDrinkList" :tableLoading="tableLoading" @row-clicked="rowClicked"/>
                 </v-col>
             </v-row>
         </v-container>
@@ -63,9 +63,10 @@ async function getFullDetails(drinkArr){
     let fullDetailArr = []
     let promises = []
     for(let i = 0; i < drinkArr.length; i++){
-        promises.push(axios.get('/api/idsearch', {params: {id: drinkArr[i]["idDrink"]}})
+        promises.push(axios.get('/api/idsearch', {params: {id: drinkArr[i]["idDrink"]}}, {timeout: 500})
             .then(response => {
-                fullDetailArr.push(preprocessApiDrinks(response.data.drinks)[0])
+                if(response.data != "")
+                    fullDetailArr.push(preprocessApiDrinks(response.data.drinks)[0])
             }))
     }
     await Promise.all(promises).then(() => {
@@ -90,7 +91,7 @@ export default  {
 
     data() {
         return {  
-            curComps: [NameSearch, IngredientSearch],
+            curComps: [NameSearch, IngredientSearch, DrinkTable],
             selected: 0,
             apiHeaders: [{text: "", align: "start", value: "img", sortable: false},
                         {text: "Drink Name", value: "dName"},
