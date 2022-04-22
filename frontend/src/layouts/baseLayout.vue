@@ -8,15 +8,7 @@
     >
       <v-toolbar-title style="cursor: pointer" @click="$router.push('/')">cocktail crafts</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn plain href="/">
-        HOME
-      </v-btn>
-      <v-btn plain href = "/discover">
-        DISCOVER
-      </v-btn>
-      <v-btn plain href = "/login">
-        LOGIN
-      </v-btn>
+      <component v-bind:is= "component"></component>
     </v-app-bar>
       <v-container style="height: 100px;">
       </v-container>
@@ -55,3 +47,34 @@
 
   </v-app>
 </template>
+
+<script>
+import loggedin from '../components/AppBarLoggedIn.vue'
+import regular from '../components/AppBarRegular.vue'
+const axios = require('axios')
+
+export default {
+  components:{
+    'logged-in':loggedin,
+    'regular': regular
+    },
+    data() {
+        return {
+          component:''
+        }
+    },
+    async created(){
+        await axios.get("/api/logininfo")
+        .then(response => {
+            console.log(response.data);
+            if(response.data.email){
+                return  this.component = 'logged-in';
+            }
+            else
+                return this.component = 'regular';
+        })
+    },
+    methods: {
+    }
+}
+</script>

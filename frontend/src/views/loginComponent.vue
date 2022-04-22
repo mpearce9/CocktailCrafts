@@ -78,7 +78,7 @@
         >
             <v-text-field
             v-model="namebox"
-            :counter="10"
+            :counter="15"
             :rules="nameRules"
             label="Name"
             required
@@ -174,13 +174,16 @@
         ],
         nameRules: [
           v => !!v || 'Name is required',
-          v => v.length <= 10 || 'Name must be less than 10 characters',
+          v => v.length <= 15 || 'Name must be less than 15 characters',
+          v => (v && v.length >2) || 'Name must be more than 2 characters'
         ],
         checkbox: false,
       }
       },
       methods:{
             loginUser(){
+                if(this.emailbox != "" && this.passwordbox != ""){
+                console.log(this.$refs.form);
                 apiClient.post('/api/login', {
                     email: this.emailbox,
                     password: this.passwordbox
@@ -199,8 +202,12 @@
                  }  
                 })
                 .catch(err => console.log(err));
+                }else{
+                  this.$refs.form.validate();
+                }
             },
             signUp(){
+            if(this.namebox != "" && this.emailbox1 != "" && this.passwordbox1 != ""){
              apiClient.post('/api/signup', {
                  name: this.namebox,
                  email: this.emailbox1,
@@ -217,10 +224,13 @@
                      console.log(response.data);
                      this.signupalertbad = true;
                      this.signupalert = false;
-                     this.$refs.form.reset();
+                     this.$refs.form1.reset();
                  } 
              })
              .catch(err => next(err));
+            }else{
+              this.$refs.form1.validate()
+            }
          }
       }
   }

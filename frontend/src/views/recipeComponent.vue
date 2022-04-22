@@ -2,21 +2,27 @@
     <v-app>
         <v-container grid-list-lg fluid fill-height>
             <v-row justify="center">
-                <h1>{{curDrink.dName}}</h1>
-            </v-row>
-            <v-row justify="center" class="mt-12">
-                <v-col cols="4">
-                    <v-card>
-                        <v-card-title>Ingredients 
+                <h1>{{curDrink.dName}} <v-tooltip right><template v-slot:activator="{ on, attrs }">
                             <v-btn
                             icon
                             color="pink"
                             @click = "favorite"
+                            v-on="on"
+                            v-bind="attrs"
                             >
                             <v-icon dark id = "favicon">
                                 {{curIcon}}
                             </v-icon>
                             </v-btn>
+                            </template>
+                            <span>Favorite Recipe</span>
+                            </v-tooltip>
+                            </h1>
+            </v-row>
+            <v-row justify="center" class="mt-12">
+                <v-col cols="4">
+                    <v-card>
+                        <v-card-title>Ingredients 
                         </v-card-title>
                         <v-list expand>
                             <v-list-item v-for="i in curDrink.dIngredients" :key="i">{{i}}</v-list-item>

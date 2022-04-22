@@ -61,6 +61,7 @@ exports.logout = (req, res, next)=>{
         if(err) 
            return next(err);
     });
+    return res.send('success');
 };
 
 exports.favorite = (req,res,next)=>{
