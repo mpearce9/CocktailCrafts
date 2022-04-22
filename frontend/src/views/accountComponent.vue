@@ -12,7 +12,7 @@
         >
           <div>
             <v-row>
-                <h1 style = "font-size:2.0em;">Welcome user,</h1>
+                <h1 style = "font-size:2.0em;" id = "welcome">Welcome, {{ user }} </h1>
             </v-row>
             <v-row>
                 <h1>&zwnj;</h1>
@@ -39,3 +39,27 @@
     </v-container>
     </v-app>
 </template>
+
+
+
+<script>
+import axios from 'axios'
+  export default {
+    data(){
+        return{
+            user: '',
+      }
+      },
+      async created() {
+          await axios.get("/api/logininfo")
+        .then(response => {
+            if(response.data.name){
+                console.log(response.data);
+                return  this.user = response.data.name;
+            }
+            else
+                return this.user = "Unknown User"
+            })
+      }
+  }
+</script>
