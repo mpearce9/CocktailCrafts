@@ -68,9 +68,11 @@ export default {
         .then(response => {
             console.log(response.data);
             if(response.data.email){
+                localStorage.setItem('user', 'known');
                 return  this.component = 'logged-in';
             }
             else
+                localStorage.setItem('user', 'unknown');
                 return this.component = 'regular';
         })
     },

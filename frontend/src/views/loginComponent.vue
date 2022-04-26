@@ -191,6 +191,7 @@
                 .then(response => {
                   console.log(response.data);
                   if(response.data == "success"){
+                      localStorage.setItem('user', 'known');
                       this.loginalert = true;
                       this.loginalertbad = false;
                       window.location.replace('/account');
