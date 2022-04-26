@@ -14,7 +14,15 @@ const routes = [
     {
         path: '/login',
         name: 'login',
-        component: () => import('../views/loginComponent')
+        component: () => import('../views/loginComponent'),
+        beforeEnter(to,from,next) {
+            if(val == "known"){
+                next('/account');
+            }else{
+                next();
+            }
+            next();
+        }
     },
     {
         path: '/aboutus',
