@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+const val = localStorage.getItem('user');
+
 const routes = [
     {
         path: '/',
@@ -22,28 +24,68 @@ const routes = [
     {
         path: '/discover',
         name: 'Discover',
-        component: () => import('../views/discoverComponent')
+        component: () => import('../views/discoverComponent'),
+        beforeEnter(to,from,next) {
+            if(val == "unknown"){
+                next('/login');
+            }else{
+                next();
+            }
+            next();
+        }
     },
     {
         path: '/account',
         name: 'Account',
-        component: () => import('../views/accountComponent')
+        component: () => import('../views/accountComponent'),
+        beforeEnter(to,from,next) {
+            if(val == "unknown"){
+                next('/login');
+            }else{
+                next();
+            }
+            next();
+        }
     },
     {
         path: '/search',
         name: 'search',
-        component: () => import('../views/SearchBar')
+        component: () => import('../views/SearchBar'),
+        beforeEnter(to,from,next) {
+            if(val == "unknown"){
+                next('/login');
+            }else{
+                next();
+            }
+            next();
+        }
     },
     {
         path: '/recipe/:id',
         name: "recipe",
         props: true,
-        component: () => import('../views/recipeComponent')
+        component: () => import('../views/recipeComponent'),
+        beforeEnter(to,from,next) {
+            if(val == "unknown"){
+                next('/login');
+            }else{
+                next();
+            }
+            next();
+        }
     }, 
     {
         path: '/accountdetails',
         name: 'Account Details',
-        component: () => import('../views/accountDetailsComponent')    
+        component: () => import('../views/accountDetailsComponent'),
+        beforeEnter(to,from,next) {
+            if(val == "unknown"){
+                next('/login');
+            }else{
+                next();
+            }
+            next();
+        }    
     },
     {
         path: '/contact',
@@ -53,12 +95,28 @@ const routes = [
     {
         path: '/random',
         name: 'Random',
-        component: () => import('../views/randomComponent')
+        component: () => import('../views/randomComponent'),
+        beforeEnter(to,from,next) {
+            if(val == "unknown"){
+                next('/login');
+            }else{
+                next();
+            }
+            next();
+        }
     },
     {
         path: '/savedCocktails',
         name: 'Saved Cocktails',
-        component: () => import('../views/SavedCocktails')
+        component: () => import('../views/SavedCocktails'),
+        beforeEnter(to,from,next) {
+            if(val == "unknown"){
+                next('/login');
+            }else{
+                next();
+            }
+            next();
+        }
     }
 
 ]

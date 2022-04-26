@@ -54,10 +54,10 @@ import axios from 'axios'
           await axios.get("/api/logininfo")
         .then(response => {
             if(response.data.name){
-                console.log(response.data);
                 return  this.user = response.data.name;
             }
             else
+                localStorage.setItem('user', 'unknown');
                 return this.user = "Unknown User"
             })
       }
