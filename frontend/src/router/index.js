@@ -28,7 +28,7 @@ const routes = [
                 next();
             }
             else {
-                next('/');
+                next('/home');
             }
         }
     },
