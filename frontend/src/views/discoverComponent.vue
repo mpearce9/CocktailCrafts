@@ -34,11 +34,34 @@
                     <v-btn block color = "info" href = "/search">Search</v-btn>
                 </v-col>
             </v-row>
-            <v-row>
-                <h1>&zwnj;</h1>
-            </v-row>
             <v-row justify="center">
-                <v-text>By joining Cocktail Crafts today, you will have access to hundreds of different cocktails. You can browse through the recipes of the most popular cocktails, search up recipes based on the ingredients you have and use the search feature to find the recipe of a cocktail you’ve been wanting to try out amongst other features. </v-text>
+                <v-col cols="3">
+                    <v-img id = "homeimg"
+                    :aspect-ratio = "46/46"
+                    max-width = "350"
+                    src="https://cdn2.lamag.com/wp-content/uploads/sites/6/2016/04/Bestia_DTLA_0630_RT_flat.jpg"
+                    ></v-img>
+                </v-col>
+                <v-col>
+                    <h1>&zwnj;</h1>
+                </v-col>
+                <v-col cols="3">
+                    <v-img id = "homeimg"
+                    :aspect-ratio = "46/46"
+                    max-width = "350"
+                    src="https://cdn11.bigcommerce.com/s-i2kcf6ha/images/stencil/1000x1000/products/315/2715/double_shelves11__58398.1552069154.jpg?c=2"
+                    ></v-img>
+                </v-col>
+                <v-col>
+                    <h1>&zwnj;</h1>
+                </v-col>
+                <v-col cols="3">
+                    <v-img id = "homeimg"
+                    :aspect-ratio = "46/46"
+                    max-width = "350"
+                    src="https://www.barschool.net/sites/default/files/styles/image_gallery_xl/public/images/node/article/30-different-cocktails-on-bar.jpg?itok=IDG3unM2"
+                    ></v-img>
+                </v-col>
             </v-row>
         </div>
         </v-card>
