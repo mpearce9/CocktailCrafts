@@ -9,8 +9,30 @@ const routes = [
     {
         path: '/',
         name: 'home',
-        component: () => import('../views/homeComponent')
+        component: () => import('../views/homeComponent'),
+        beforeEnter(to,from,next) {
+            if(val == "known"){
+                next('/homelogin=true');
+            }else{
+                next();
+            }
+            next();
+        }
     },
+    {
+        path:'/homelogin=true',
+        name: 'home',
+        component: () => import('../views/homeLoginComponent.vue'),
+        beforeEnter(to,from,next) {
+            if(val == 'known') {
+                next();
+            }
+            else {
+                next('/');
+            }
+        }
+    },
+
     {
         path: '/login',
         name: 'login',
