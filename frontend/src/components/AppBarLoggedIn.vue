@@ -36,6 +36,7 @@ export default {
             .then(response => {
             console.log(response.data);
             if(response.data == "success"){
+                localStorage.setItem('user', 'unknown');
                 window.location.replace('/login');
             }
             else{
