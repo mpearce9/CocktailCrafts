@@ -25,7 +25,7 @@
                     <h1>&zwnj;</h1>
                 </v-col>
                 <v-col cols="3">
-                    <v-btn block color = "info" href = "/ingredients">Bar Shelf</v-btn>
+                    <v-btn block color = "info" href = "/barShelf">Bar Shelf</v-btn>
                 </v-col>
                 <v-col>
                     <h1>&zwnj;</h1>
