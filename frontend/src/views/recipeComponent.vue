@@ -2,12 +2,28 @@
     <v-app>
         <v-container grid-list-lg fluid fill-height>
             <v-row justify="center">
-                <h1>{{curDrink.dName}}</h1>
+                <h1>{{curDrink.dName}} <v-tooltip right><template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                            icon
+                            color="pink"
+                            @click = "favorite"
+                            v-on="on"
+                            v-bind="attrs"
+                            >
+                            <v-icon dark id = "favicon">
+                                {{curIcon}}
+                            </v-icon>
+                            </v-btn>
+                            </template>
+                            <span>Favorite Recipe</span>
+                            </v-tooltip>
+                            </h1>
             </v-row>
             <v-row justify="center" class="mt-12">
                 <v-col cols="4">
                     <v-card>
-                        <v-card-title>Ingredients</v-card-title>
+                        <v-card-title>Ingredients 
+                        </v-card-title>
                         <v-list expand>
                             <v-list-item v-for="i in curDrink.dIngredients" :key="i">{{i}}</v-list-item>
                         </v-list>
@@ -58,25 +74,73 @@ function preprocessDrink(drink){
 
 export default {
     props:{
-        id : String
+        id : String,
     },
     data() {
         return {
-            curDrink: {dName: "",
-                        category: "", 
-                        dIngredients: [], 
-                        id: "",
-                        img: "",
-                        instructions: ""}
+        favBoolean: '',
+        curIcon: "",
+        curDrink: {dName: "",
+            category: "", 
+            dIngredients: [], 
+            id: "",
+            img: "",
+            instructions: ""},
+        useremail: '',
         }
     },
     async created(){
         await axios.get("/api/idsearch", {params: {id: this.id}})
         .then(response => this.curDrink = preprocessDrink(response.data.drinks[0]))
+
+        await axios.get("/api/logininfo")
+        .then(response => {
+            console.log(response.data);
+            if(response.data.email){
+                return  this.useremail = response.data.email;
+            }
+            else
+                return this.useremail = "UnknownUser"
+        })
+
+        await axios.get("/api/isfavorite/" + this.curDrink.id)
+        .then(response => {
+            console.log(response.data);
+            if(response.data.length > 0){
+                this.favBoolean = true;
+            }
+            else
+                this.favBoolean = false;
+        })
+        return this.curIcon = this.favBoolean ? "mdi-heart" : "mdi-heart-outline";
     },
     methods: {
         backToSearch(){
             router.push({name: 'search'})
+        },
+        favorite(){
+            this.favBoolean = !this.favBoolean;
+            this.curIcon = this.favBoolean ? "mdi-heart" : "mdi-heart-outline";
+            console.log(this.curDrink);
+            console.log(this.useremail);
+            if(this.favBoolean){
+                axios.post("/api/favorite",{
+                name: this.curDrink.dName, ingredients: this.curDrink.dIngredients, category: this.curDrink.category, cocktailid: this.curDrink.id, img: this.curDrink.img, instructions: this.curDrink.instructions, useremail: this.useremail
+                })
+                .then(response =>{
+                    console.log(response);
+                })
+                .catch(err => console.log(err));
+            }
+            else{
+                axios.post("/api/unfavorite",{
+                    name: this.curDrink.dName, ingredients: this.curDrink.dIngredients, category: this.curDrink.category, cocktailid: this.curDrink.id, img: this.curDrink.img, instructions: this.curDrink.instructions, useremail: this.useremail
+                })
+                .then(response =>{
+                    console.log(response);
+                })
+                .catch(err => console.log(err));
+            }
         }
     }
 }
