@@ -1,15 +1,15 @@
 <template>
 <div>
-      <v-btn plain href="/">
+      <v-btn plain @click="$router.push('/')">
         HOME
       </v-btn>
-      <v-btn plain href = "/discover">
+      <v-btn plain @click="$router.push('/discover')">
         DISCOVER
       </v-btn>
-      <v-btn plain href = "/search">
+      <v-btn plain @click="$router.push('/search')">
         SEARCH
       </v-btn>
-      <v-btn plain href = "/account">
+      <v-btn plain @click="$router.push('/account')">
         ACCOUNT
       </v-btn>
       <v-btn plain @click="logOut">
@@ -20,7 +20,7 @@
 
 <style scoped>
 div {
-    align-content: right;
+    justify-content: end;
 }
 </style>
 <script>

@@ -78,8 +78,9 @@ const routes = [
         }
     },
     {
-        path: '/search',
+        path: '/search/:headerSearch?',
         name: 'search',
+        props: true,
         component: () => import('../views/SearchBar'),
         beforeEnter(to,from,next) {
             if(val == "unknown"){

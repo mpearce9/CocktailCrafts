@@ -7,7 +7,9 @@
       dark
     >
       <v-toolbar-title style="cursor: pointer" @click="$router.push('/')">cocktail crafts</v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-container style="height: 100%; width: 50%">
+        <v-text-field v-if="!isSearchPage" prepend-inner-icon="mdi-magnify" label="Search for a Drink" style="align: center" @keydown.enter="$router.push({name: 'search', params: {headerSearch: drinkSearch}})" v-model="drinkSearch" dark outlined dense clearable/>
+      </v-container>
       <component v-bind:is= "component"></component>
     </v-app-bar>
       <v-container style="height: 100px;">
@@ -60,8 +62,14 @@ export default {
     },
     data() {
         return {
-          component:''
+          component:'',
+          drinkSearch: ""
         }
+    },
+    computed: {
+      isSearchPage(){
+        return this.$route.name == "search"
+      }
     },
     async created(){
         await axios.get("/api/logininfo")

@@ -13,10 +13,10 @@
                 </v-col>
             </v-row>
             <v-scroll-x-reverse-transition v-if="selected == 0" mode="in" :hide-on-leave="true">
-                <component :is="curComps[selected]" @nameSearch="onNameSearch"/>
+                <component :is="curComps[selected]" @nameSearch="onNameSearch" :curSearch="curSearch"/>
             </v-scroll-x-reverse-transition>
             <v-scroll-x-transition v-else mode="in" :hide-on-leave="true">
-                <component :is="curComps[selected]" :ingredient_options="ingredientsList" @ingredientSearch="onIngredientSearch"/>
+                <component :is="curComps[selected]" :ingredient_options="ingredientsList" :curSearch="curIngSearch" @ingredientSearch="onIngredientSearch"/>
             </v-scroll-x-transition>
             <v-row justify="center">
                 <v-col>
@@ -32,6 +32,7 @@ import IngredientSearch from '../components/IngredientSearch.vue'
 import NameSearch from '../components/NameSearch.vue'
 import DrinkTable from '../components/DrinkTable.vue'
 import router from '../router/index'
+import {beforeRouteLeave} from 'vue-router'
 const axios = require('axios')
 
 function preprocessApiDrinks(drinkArr){
@@ -89,6 +90,10 @@ export default  {
         DrinkTable
     },
 
+    props:{
+        headerSearch : String,
+    },
+
     data() {
         return {  
             curComps: [NameSearch, IngredientSearch, DrinkTable],
@@ -99,11 +104,30 @@ export default  {
                         {text: "Ingredients", value: "dIngredients"}],
             apiDrinkList: [],
             ingredientsList: [],
-            tableLoading: true
+            tableLoading: true,
+            curSearch: "",
+            curIngSearch: []
         }
     },
     async created() {
-        if(localStorage.getItem('drink-list')){
+        if(this.headerSearch){
+            this.curSearch = this.headerSearch
+            await this.onNameSearch(this.headerSearch)
+        }
+        else if(sessionStorage.getItem("lastSearch")){
+            let lastSearch = sessionStorage.getItem("lastSearch")
+            if(sessionStorage.getItem("lastSearchType") == 'name'){
+                this.curSearch = lastSearch
+                this.selected = 0
+                await this.onNameSearch(lastSearch)
+            } else {
+                this.selected = 1
+                let searchTerms = lastSearch.split(',')
+                this.curIngSearch = searchTerms
+                await this.onIngredientSearch(searchTerms)
+            }
+        }
+        else if(localStorage.getItem('drink-list')){
             this.apiDrinkList = JSON.parse(localStorage.getItem('drink-list'))
             this.tableLoading = false
         } else {
@@ -112,10 +136,12 @@ export default  {
                 .then(response => {
                     fullResponse = response.data.drinks        
                 })
-            let finalList = await getFullDetails(fullResponse)
-            this.apiDrinkList = finalList//preprocessApiDrinks(response.data.drinks)
+            
+            this.apiDrinkList = await getFullDetails(fullResponse.slice(0,20))
+            this.tableLoading = false  
+            this.apiDrinkList = await getFullDetails(fullResponse)
             localStorage.setItem('drink-list', JSON.stringify(this.apiDrinkList))
-            this.tableLoading = false   
+             
         }
         if(localStorage.getItem('ingredient-list')){
             this.ingredientsList = JSON.parse(localStorage.getItem('ingredient-list'))
@@ -127,11 +153,24 @@ export default  {
                 })
         }
     },
+    beforeRouteLeave(to, from, next){
+        console.log(to.name);
+        if(to.name !== 'recipe'){
+            sessionStorage.removeItem("lastSearch")
+            sessionStorage.removeItem("lastSearchType")
+        }
+        next()
+    },
     methods: {
         rowClicked(value){
             router.push({name: 'recipe', params: { id: value.id } })
         },
         async onNameSearch(search){
+            sessionStorage.setItem("lastSearch", search)
+            sessionStorage.setItem("lastSearchType", "name")
+            this.curSearch = search
+            this.curIngSearch = []
+
             this.tableLoading = true
             await axios.get("/api/namesearch", {params: {name: search}})
             .then(response => {
@@ -143,8 +182,12 @@ export default  {
             })
         },
         async onIngredientSearch(search){
-            this.tableLoading = true
+            sessionStorage.setItem("lastSearch", search)
+            sessionStorage.setItem("lastSearchType", "ingredient")
+            this.curSearch = ""
+            this.curIngSearch = search
 
+            this.tableLoading = true
             let searchString = ""
             for(let i = 0; i<search.length; i++){
                 if(i != search.length - 1){
@@ -165,7 +208,7 @@ export default  {
                 this.apiDrinkList = []
             this.tableLoading = false
         }
-    }
+    },
 }
 </script>
 <style scoped>

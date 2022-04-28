@@ -13,15 +13,20 @@
 
 <script>
 export default {
+    props: {
+        curSearch: String
+    },
     data() {
         return {
             search: ""
         }
     },
+    created() {
+        this.search = this.curSearch
+    },
     methods:{
         onSearch(){
             this.$emit('nameSearch', this.search)
-            this.search = ""
         }
     }
 }

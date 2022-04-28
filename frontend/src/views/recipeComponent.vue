@@ -78,15 +78,15 @@ export default {
     },
     data() {
         return {
-        favBoolean: '',
-        curIcon: "",
-        curDrink: {dName: "",
-            category: "", 
-            dIngredients: [], 
-            id: "",
-            img: "",
-            instructions: ""},
-        useremail: '',
+            favBoolean: '',
+            curIcon: "",
+            curDrink: {dName: "",
+                category: "", 
+                dIngredients: [], 
+                id: "",
+                img: "",
+                instructions: ""},
+            useremail: '',
         }
     },
     async created(){

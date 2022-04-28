@@ -14,7 +14,8 @@
 <script>
 export default {
     props: {
-        ingredient_options: Array
+        ingredient_options: Array,
+        curSearch: Array
     },
     data(){
         return {
@@ -24,6 +25,9 @@ export default {
                               {"name" : "Garnish", "options" : ["Orange", "Lime", "Cherry", "Olive"]}],
             curIngredient: [],
         }
+    },
+    created() {
+        this.curIngredient = this.curSearch
     },
     methods: {
         onSearch(){
