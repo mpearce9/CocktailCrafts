@@ -1,9 +1,13 @@
 # CocktailCrafts
 ```
-cd frontend
+
 ```
 ## Project setup
 
+## Navigate to frontend folder
+```
+cd frontend
+```
 ### Install dependencies
 ```
 npm install
@@ -14,9 +18,7 @@ npm run build
 ```
 ### Reroute to root directory then to the server
 ```
-cd ..
-
-cd server
+cd ../server
 ```
 ### Install dependencies
 ```
