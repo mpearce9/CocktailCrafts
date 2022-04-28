@@ -21,6 +21,7 @@
               <option style="color:black">Activity 3</option>
               <option style="color:black">Activity 4</option>
           </select>
+          <p style="color:white">Added Ingredients: </p>
           <br><br>
         </form>
 
