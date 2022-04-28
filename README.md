@@ -1,7 +1,5 @@
 # CocktailCrafts
-```
 
-```
 ## Project setup
 
 ## Navigate to frontend folder
