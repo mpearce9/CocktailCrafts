@@ -2,6 +2,7 @@ const express = require('express');
 const controller = require('../controller/mainController');
 const router = express.Router();
 const usercontroller = require('../controller/user.controller');
+const ingredientsController = require('../controller/ingredientsController');
 
 router.get('/populate', controller.getStart)
 router.get('/idsearch', controller.idDrinkSearch)
@@ -24,6 +25,14 @@ router.post('/unfavorite', usercontroller.unfavorite)
 router.get('/listfavorites', usercontroller.listfavorites)
 
 router.get('/isfavorite/:id', usercontroller.isfavorite)
+
+router.post('/addLiquor', ingredientsController.addLiquor)
+
+router.post('/addMixer', ingredientsController.addMixer)
+
+router.post('/addGarnish', ingredientsController.addGarnish)
+
+router.post('/addBitters', ingredientsController.addBitters)
 /*
 // error handler
 router.use(function(err, req, res, next) {

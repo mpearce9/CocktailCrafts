@@ -5,7 +5,8 @@
                     <v-autocomplete :items="ingredient_options" label="Ingredients" v-model="curIngredient" multiple chips small-chips clearable deletable-chips dense outlined :menu-props="{offsetY: true}"/>
                 </v-col>
                 <v-col cols="2">
-                    <v-btn color="secondary" @click="onSearch" dark block>Search</v-btn>
+                    <v-btn v-if="searchButton" color="secondary" @click="onSearch" dark block>Search</v-btn>
+                    <v-btn v-else color="secondary" @click="onAdd" dark block>Add Ingredients</v-btn>
                 </v-col>
             </v-row>
     </v-container>
@@ -14,7 +15,11 @@
 <script>
 export default {
     props: {
-        ingredient_options: Array
+        ingredient_options: Array,
+        searchButton: {
+            type: Boolean,
+            default: true
+        }
     },
     data(){
         return {
@@ -28,6 +33,9 @@ export default {
     methods: {
         onSearch(){
             this.$emit('ingredientSearch', this.curIngredient)
+        },
+        onAdd(){
+            this.$emit('ingredientAdd', this.curIngredient)
         }
     }
 }

@@ -23,6 +23,7 @@
           </select>
           <br><br>
           <p style="color:white">Added Ingredients: </p>
+          <br>{{liquor}}<br>{{mixer}}<br>{{garnish}}<br>{{bitters}}
         </form>
 
       </v-col>
