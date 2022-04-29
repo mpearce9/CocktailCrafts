@@ -136,7 +136,21 @@ export default {
             router.push({name: 'Account'})
         },
         backToRandom(){
-            window.location.reload();
+
+        await axios.get("https://www.thecocktaildb.com/api/json/v2/9973533/random.php")
+        .then(response => this.curDrink = preprocessDrink(response.data.drinks[0]))
+
+        await axios.get("/api/isfavorite/" + this.curDrink.id)
+        .then(response => {
+            console.log(response.data);
+            if(response.data.length > 0){
+                this.favBoolean = true;
+            }
+            else
+                this.favBoolean = false;
+        })
+        this.curIcon = this.favBoolean ? "mdi-heart" : "mdi-heart-outline";
+    }
         },
         favorite(){
             this.favBoolean = !this.favBoolean;
