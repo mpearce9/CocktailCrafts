@@ -218,9 +218,7 @@
                  if(response.data == "success"){
                       this.signupalert = true;
                       this.signupalertbad = false;
-                      this.namebox = '';
-                      this.emailbox1 = '';
-                      this.passwordbox1 = '';
+                      this.$refs.form1.reset();
                  }else{
                      console.log(response.data);
                      this.signupalertbad = true;
