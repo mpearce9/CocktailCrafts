@@ -1,9 +1,9 @@
 <template>
 <div>
-<v-btn plain href="/">
+<v-btn plain to="/">
         HOME
       </v-btn>
-      <v-btn plain href = "/login">
+      <v-btn plain to = "/login">
         LOGIN
       </v-btn>
       </div>

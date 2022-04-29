@@ -1,15 +1,15 @@
 <template>
 <div>
-      <v-btn plain href="/">
+      <v-btn plain to="/">
         HOME
       </v-btn>
-      <v-btn plain href = "/discover">
+      <v-btn plain to = "/discover">
         DISCOVER
       </v-btn>
-      <v-btn plain href = "/search">
+      <v-btn plain to = "/search">
         SEARCH
       </v-btn>
-      <v-btn plain href = "/account">
+      <v-btn plain to = "/account">
         ACCOUNT
       </v-btn>
       <v-btn plain @click="logOut">
