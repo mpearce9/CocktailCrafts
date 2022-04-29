@@ -75,24 +75,81 @@
       }
       },
       methods:{
-            addIngredients(){
+            addLiquor(){
+                if(this.liquorbox != "" ){
+                console.log(this.$refs.form);
+                apiClient.post('/api/addLiquor', {
+                    liquor: this.liquorbox,
+                })
+                .then(response => {
                   console.log(response.data);
-                  if(liquorbox.data == "success"){
-                      localStorage.addItem()
+                  if(response.data == "success"){
+                      localStorage.setItem('liquor', 'known');
                       this.addalert = true;
-                 }
-                 if(mixerbox.data == "success"){
-                      localStorage.addItem()
+                      window.location.replace('/account');
+                 } 
+                })
+                .catch(err => console.log(err));
+                }else{
+                  this.$refs.form.validate();
+                }
+            },
+            addMixer(){
+                if(this.mixerbox != "" ){
+                console.log(this.$refs.form);
+                apiClient.post('/api/addMixer', {
+                    mixer: this.mixerbox,
+                })
+                .then(response => {
+                  console.log(response.data);
+                  if(response.data == "success"){
+                      localStorage.setItem('mixer', 'known');
                       this.addalert = true;
-                 }
-                 if(garnishbox.data == "success"){
-                      localStorage.addItem()
+                      window.location.replace('/account');
+                 } 
+                })
+                .catch(err => console.log(err));
+                }else{
+                  this.$refs.form.validate();
+                }
+            },
+            addGarnish(){
+                if(this.garnishbox != "" ){
+                console.log(this.$refs.form);
+                apiClient.post('/api/addGarnish', {
+                    liquor: this.garnishbox,
+                })
+                .then(response => {
+                  console.log(response.data);
+                  if(response.data == "success"){
+                      localStorage.setItem('garnish', 'known');
                       this.addalert = true;
-                 }
-                 if(bitterbox.data == "success"){
-                      localStorage.addItem()
+                      window.location.replace('/account');
+                 } 
+                })
+                .catch(err => console.log(err));
+                }else{
+                  this.$refs.form.validate();
+                }
+            },
+            addBitters(){
+                if(this.bittersbox != "" ){
+                console.log(this.$refs.form);
+                apiClient.post('/api/addBitters', {
+                    liquor: this.bittersbox,
+                })
+                .then(response => {
+                  console.log(response.data);
+                  if(response.data == "success"){
+                      localStorage.setItem('bitters', 'known');
                       this.addalert = true;
-                 }
+                      window.location.replace('/account');
+                 } 
+                })
+                .catch(err => console.log(err));
+                }else{
+                  this.$refs.form.validate();
+                }
             }
       }
   }

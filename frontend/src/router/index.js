@@ -157,13 +157,7 @@ const routes = [
         path: '/add',
         name: 'Add',
         component: () => import('../views/add')
-    },
-    {
-        path: '/added',
-        name: 'Add',
-        component: () => import('../views/AddedIngredients')
     }
-
 ]
 
 export default new VueRouter({
