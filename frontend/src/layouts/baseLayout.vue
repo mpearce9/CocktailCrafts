@@ -8,15 +8,7 @@
     >
       <v-toolbar-title style="cursor: pointer" @click="$router.push('/')">cocktail crafts</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn plain href="/">
-        HOME
-      </v-btn>
-      <v-btn plain href = "/discover">
-        DISCOVER
-      </v-btn>
-      <v-btn plain href = "/login">
-        LOGIN
-      </v-btn>
+      <component v-bind:is= "component"></component>
     </v-app-bar>
       <v-container style="height: 100px;">
       </v-container>
@@ -40,10 +32,10 @@
         class="rgb(15, 12, 12) py-4 text-center white--text"
         cols="12"
       >
-      <v-btn plain href="/aboutus">
+      <v-btn plain to="/aboutus">
         ABOUT US
       </v-btn>
-      <v-btn plain href = "/contact">
+      <v-btn plain to = "/contact">
         CONTACT
       </v-btn>
       <v-btn plain disabled>
@@ -55,3 +47,36 @@
 
   </v-app>
 </template>
+
+<script>
+import loggedin from '../components/AppBarLoggedIn.vue'
+import regular from '../components/AppBarRegular.vue'
+const axios = require('axios')
+
+export default {
+  components:{
+    'logged-in':loggedin,
+    'regular': regular
+    },
+    data() {
+        return {
+          component:''
+        }
+    },
+    async created(){
+        await axios.get("/api/logininfo")
+        .then(response => {
+            console.log(response.data);
+            if(response.data.email){
+                localStorage.setItem('user', 'known');
+                return  this.component = 'logged-in';
+            }
+            else
+                localStorage.setItem('user', 'unknown');
+                return this.component = 'regular';
+        })
+    },
+    methods: {
+    }
+}
+</script>
