@@ -107,8 +107,7 @@ export default {
         }
     },
     async created(){
-        await axios.get("https://www.thecocktaildb.com/api/json/v2/9973533/random.php")
-        .then(response => this.curDrink = preprocessDrink(response.data.drinks[0]))
+        
 
         await axios.get("/api/logininfo")
         .then(response => {
@@ -135,7 +134,8 @@ export default {
         backToAccount(){
             router.push({name: 'Account'})
         },
-        backToRandom(){
+
+        async backToRandom(){
 
         await axios.get("https://www.thecocktaildb.com/api/json/v2/9973533/random.php")
         .then(response => this.curDrink = preprocessDrink(response.data.drinks[0]))
@@ -150,15 +150,15 @@ export default {
                 this.favBoolean = false;
         })
         this.curIcon = this.favBoolean ? "mdi-heart" : "mdi-heart-outline";
-    }
-        },
-        favorite(){
+        }
+        ,
+        favorite() {
             this.favBoolean = !this.favBoolean;
             this.curIcon = this.favBoolean ? "mdi-heart" : "mdi-heart-outline";
             console.log(this.curDrink);
             console.log(this.useremail);
             if(this.favBoolean){
-                axios.post("/api/favorite",{
+                axios.post("/api/favorite", {
                 name: this.curDrink.dName, ingredients: this.curDrink.dIngredients, category: this.curDrink.category, cocktailid: this.curDrink.id, img: this.curDrink.img, instructions: this.curDrink.instructions, useremail: this.useremail
                 })
                 .then(response =>{
