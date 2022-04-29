@@ -32,10 +32,10 @@
         class="rgb(15, 12, 12) py-4 text-center white--text"
         cols="12"
       >
-      <v-btn plain href="/aboutus">
+      <v-btn plain to="/aboutus">
         ABOUT US
       </v-btn>
-      <v-btn plain href = "/contact">
+      <v-btn plain to = "/contact">
         CONTACT
       </v-btn>
       <v-btn plain disabled>

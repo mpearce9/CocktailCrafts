@@ -19,18 +19,18 @@
             </v-row>
             <v-row justify="center">
                 <v-col cols="6">
-                    <v-btn block color = "info" href = "/savedCocktails">Your Saved Cocktails</v-btn>
+                    <v-btn block color = "info" to = "/savedCocktails">Your Saved Cocktails</v-btn>
                 </v-col>
                 <v-col cols="6">
-                    <v-btn block color = "info" href = "/accountDetails">Account Details</v-btn>
+                    <v-btn block color = "info" to = "/accountDetails">Account Details</v-btn>
                 </v-col>
             </v-row>
             <v-row justify="center">
                 <v-col cols="6">
-                    <v-btn block color = "info" href = "/recommendations">Recommendations</v-btn>
+                    <v-btn block color = "info" to = "/recommendations">Recommendations</v-btn>
                 </v-col>
                 <v-col cols="6">
-                    <v-btn block color = "info" href = "/random">Random</v-btn>
+                    <v-btn block color = "info" to = "/random">Random</v-btn>
                 </v-col>
             </v-row>
         </div>
