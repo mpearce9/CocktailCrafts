@@ -55,7 +55,8 @@ function preprocessApiDrinks(drinkArr){
                             dIngredients: ingredients, 
                             id: drinkArr[i]["idDrink"],
                             img: drinkArr[i]["strDrinkThumb"],
-                            instructions: drinkArr[i]["strInstructions"]})
+                            instructions: drinkArr[i]["strInstructions"],
+                            favorited: false})
     }
     return finalDrinkArr
 }
@@ -101,7 +102,8 @@ export default  {
             apiHeaders: [{text: "", align: "start", value: "img", sortable: false},
                         {text: "Drink Name", value: "dName"},
                         {text: "Category", value: "category"},
-                        {text: "Ingredients", value: "dIngredients"}],
+                        {text: "Ingredients", value: "dIngredients"},
+                        {text: "Favorite", valued: "favorited"}],
             apiDrinkList: [],
             ingredientsList: [],
             tableLoading: true,
