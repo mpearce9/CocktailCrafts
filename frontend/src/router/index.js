@@ -28,7 +28,7 @@ const routes = [
                 next();
             }
             else {
-                next('/');
+                next('/home');
             }
         }
     },
@@ -45,6 +45,11 @@ const routes = [
             }
             next();
         }
+    },
+    {
+        path: '/create',
+        name: 'create',
+        component: () => import('../views/createComponent')
     },
     {
         path: '/aboutus',
