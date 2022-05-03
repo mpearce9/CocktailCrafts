@@ -26,13 +26,9 @@ router.get('/listfavorites', usercontroller.listfavorites)
 
 router.get('/isfavorite/:id', usercontroller.isfavorite)
 
-router.post('/addLiquor', ingredientsController.addLiquor)
+router.post('/addIngredients', ingredientsController.addIngredients)
 
-router.post('/addMixer', ingredientsController.addMixer)
-
-router.post('/addGarnish', ingredientsController.addGarnish)
-
-router.post('/addBitters', ingredientsController.addBitters)
+router.post('/listAddedIngredients', ingredientsController.listAddedIngredients)
 /*
 // error handler
 router.use(function(err, req, res, next) {

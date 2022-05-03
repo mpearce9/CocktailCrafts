@@ -1,3 +1,4 @@
+<!--This pabe is where you can add ingredients -->
 <template>
     <v-app>
     <v-container>
@@ -17,6 +18,7 @@
             <IngredientSearch  :searchButton="false" :ingredient_options="ingredientsList" @ingredientAdd="onIngredientAdd"/>
             <v-row justify="center">
                 <v-col>
+                    //This is the table where you add ingredients to. 
                     <v-data-table
                         :headers="ingredientHeaders"
                         :items="ownedIngredients"
@@ -36,6 +38,7 @@
 </template>
 
 <script>
+//import statments 
 import IngredientSearch from '../components/IngredientSearch.vue'
 import router from '../router/index'
 export default  {
@@ -45,6 +48,7 @@ export default  {
     },
     data() {
         return {
+            //what do we need to return here, the headers of the table and ingredients
             ingredientHeaders: [{text: "Ingredient", value: "ingredient"}],
             ingredientsList: [],
             ownedIngredients: [],

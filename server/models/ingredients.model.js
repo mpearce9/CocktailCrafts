@@ -1,15 +1,12 @@
 module.exports = mongoose => {
-    const Ingredients = mongoose.model(
-      "ingredient",
+    const addedIngredients = mongoose.model(
+      "ingredients",
       mongoose.Schema(
         {
-          liquor: String,
-          mixer: String,
-          bitters: String,
-          garnish:String
+          addedIngredients: Array
         },
         { timestamps: true }
       )
     );
-    return Ingredient;
+    return addedIngredients;
   };

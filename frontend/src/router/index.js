@@ -107,7 +107,7 @@ const routes = [
     {
         path: '/accountdetails',
         name: 'Account Details',
-        component: () => import('../views/accountDetailsComponent'),
+        component: () => import('../views/addedIngredients'),
         beforeEnter(to,from,next) {
             if(val == "unknown"){
                 next('/login');
@@ -157,6 +157,11 @@ const routes = [
         path: '/add',
         name: 'Add',
         component: () => import('../views/add')
+    },
+    {
+        path: '/added',
+        name: 'Added',
+        component: () => import('../views/addedIngredients')
     }
 ]
 

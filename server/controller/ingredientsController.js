@@ -125,120 +125,28 @@ exports.isfavorite = (req, res, next) =>{
     .catch(err => console.log(err));
 }
 
-exports.addLiquor = (req,res,next)=>{
+exports.addIngredients = (req,res,next)=>{
     let info = new Ingredient({
         name: req.body.name,
         useremail: req.body.useremail,
-        liquor: req.body.liquor
+        addedIngredients: req.body.addedIngredients,
     });
     console.log(info);
     info.save()//insert the document to the database
-    .then(info=> {
-        console.log('added');
-        return res.send("success");
-    }
-        )
-    .catch(err=>{
-        if(err.name === 'ValidationError' ) {
-            console.log(err);
-            return res.send("fail");
-        }
-
-        if(err.code === 11000) {
-            console.log(err);
-            return res.send("fail");
-        }
-        
-        console.log(err);
-    }); 
-
+    ingredients.insert({name: name, addedIngredients: addedIngredients})
+    .then(addIngredients => {
+        return res.send('success');
+    })
+    .catch(err => console.log(err));
 }
 
-exports.addMixer = (req,res,next)=>{
-    let info = new Ingredient({
-        name: req.body.name,
-        useremail: req.body.useremail,
-        mixer: req.body.mixer
-    });
-    console.log(info);
-    info.save()//insert the document to the database
-    .then(info=> {
-        console.log('added');
-        return res.send("success");
-    }
-        )
-    .catch(err=>{
-        if(err.name === 'ValidationError' ) {
-            console.log(err);
-            return res.send("fail");
-        }
-
-        if(err.code === 11000) {
-            console.log(err);
-            return res.send("fail");
-        }
-        
-        console.log(err);
-    }); 
-
+exports.listAddedIngredients = (req, res, next) =>{
+    ingredients.find({useremail: req.session.email, ingredients: req.session.addedIngredients})
+    .then(response => {
+        res.json(response);
+    })
+    .catch(err => console.log(err));
 }
 
-exports.addGarnish = (req,res,next)=>{
-    let info = new Ingredient({
-        name: req.body.name,
-        useremail: req.body.useremail,
-        garnish: req.body.garnish
-    });
-    console.log(info);
-    info.save()//insert the document to the database
-    .then(info=> {
-        console.log('added');
-        return res.send("success");
-    }
-        )
-    .catch(err=>{
-        if(err.name === 'ValidationError' ) {
-            console.log(err);
-            return res.send("fail");
-        }
-
-        if(err.code === 11000) {
-            console.log(err);
-            return res.send("fail");
-        }
-        
-        console.log(err);
-    }); 
-
-}
-
-exports.addBitters = (req,res,next)=>{
-    let info = new Ingredient({
-        name: req.body.name,
-        useremail: req.body.useremail,
-        bitters: req.body.bitters
-    });
-    console.log(info);
-    info.save()//insert the document to the database
-    .then(info=> {
-        console.log('added');
-        return res.send("success");
-    }
-        )
-    .catch(err=>{
-        if(err.name === 'ValidationError' ) {
-            console.log(err);
-            return res.send("fail");
-        }
-
-        if(err.code === 11000) {
-            console.log(err);
-            return res.send("fail");
-        }
-        
-        console.log(err);
-    }); 
-
-}
 
 
