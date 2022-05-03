@@ -1,4 +1,5 @@
 <template>
+<!-- home page for the user who is logged in, shows a photo, a little blurb about our app, and then a link to log in to our site -->
     <v-app>
     <v-container>
     <v-row

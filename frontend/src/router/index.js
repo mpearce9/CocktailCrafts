@@ -3,13 +3,16 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+// the local storage is used to see whether a user is logged in or not
 const val = localStorage.getItem('user');
 
+//this router is the router for the vue components on the frontend side, based on the base url
 const routes = [
     {
         path: '/',
         name: 'home',
         component: () => import('../views/homeComponent'),
+        //the before enter function is used for navigation guards, if a user is logged in, other components show where others do not
         beforeEnter(to,from,next) {
             if(val == "known"){
                 next('/homelogin=true');
@@ -151,6 +154,7 @@ const routes = [
 
 ]
 
+// exports the router for our vue project
 export default new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,

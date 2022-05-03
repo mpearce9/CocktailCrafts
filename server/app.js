@@ -23,6 +23,7 @@ app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// connects to database and uses the db models
 const db = require("./models");
 db.mongoose
   .connect(db.url, {
@@ -36,6 +37,8 @@ db.mongoose
     console.log("Cannot connect to the database!", err);
     process.exit();
   });
+
+// creates a session and uses cookies
 app.use(
     session({
         secret: "cocktailcraftssecret",
@@ -47,6 +50,7 @@ app.use(
         })
 );
 
+//sets the session user, name, and email 
 app.use((req, res, next) => {
     res.locals.user = req.session.user||null;
     res.locals.name = req.session.name||null;
@@ -68,6 +72,7 @@ app.get('/*', (req, res)=> {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
 
+// error checking
 app.use((err, req, res, next)=>{
     if(!err.status) {
         err.status = 500;

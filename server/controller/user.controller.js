@@ -2,6 +2,7 @@ const db = require("../models");
 const User = db.users;
 const Favorite = db.favorite;
 
+// signup function using request data
 exports.signup = (req, res, next)=>{
     console.log('body of request:' + JSON.stringify(req.body));
     let user = new User({
@@ -28,6 +29,7 @@ exports.signup = (req, res, next)=>{
     }); 
 };
 
+// login function to check against the data in the database
 exports.login = (req, res, next)=>{
     let email = req.body.email;
     let password = req.body.password;
@@ -52,10 +54,12 @@ exports.login = (req, res, next)=>{
     .catch(err => console.log(err));
 };
 
+//returns the login info for a logged in user
 exports.getlogininfo = (req,res,next)=>{
     return res.json(req.session);
 };
 
+// destroys the user's session, logouts the user
 exports.logout = (req, res, next)=>{
     req.session.destroy(err=>{
         if(err) 
@@ -64,6 +68,7 @@ exports.logout = (req, res, next)=>{
     return res.send('success');
 };
 
+// favorite functions that saves a favorite model into the database
 exports.favorite = (req,res,next)=>{
     let info = new Favorite({
         name: req.body.name,
@@ -97,6 +102,7 @@ exports.favorite = (req,res,next)=>{
 
 }
 
+// unfavorites the drink, removes it from the database
 exports.unfavorite = (req,res,next)=>{
     let useremail = req.body.useremail;
     let cocktailid = req.body.cocktailid;
@@ -107,6 +113,7 @@ exports.unfavorite = (req,res,next)=>{
     .catch(err => console.log(err));
 }
 
+// returns the list of favorites for a  user from the database
 exports.listfavorites = (req, res, next) =>{
     Favorite.find({useremail: req.session.email})
     .then(response => {
@@ -115,6 +122,7 @@ exports.listfavorites = (req, res, next) =>{
     .catch(err => console.log(err));
 }
 
+// returns if the user has favorited a certain drink
 exports.isfavorite = (req, res, next) =>{
     Favorite.find({useremail: req.session.email, cocktailid: req.params.id})
     .then(response => {
@@ -123,17 +131,3 @@ exports.isfavorite = (req, res, next) =>{
     })
     .catch(err => console.log(err));
 }
-
-// exports.isfavorited = (req, res, next) =>{
-//     console.log(req);
-//     let cocktailid = req.params.id;
-//     let useremail = req.session.email;
-//     Favorites.find({useremail: useremail, cocktailid: cocktailid})
-//     .then(function (response) {
-//         console.log(response.data);
-//         return res.send("success");
-//     })
-//     .catch(function(error) {
-//         console.log(error);
-//     })
-// }
