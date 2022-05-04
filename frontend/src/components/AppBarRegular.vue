@@ -11,6 +11,6 @@
 </template>
 <style scoped>
 div {
-    align-content: right;
+    justify-content: end;
 }
 </style>
