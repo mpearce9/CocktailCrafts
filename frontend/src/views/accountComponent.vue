@@ -22,12 +22,12 @@
                     <v-btn block color = "info" href = "/savedCocktails">Your Saved Cocktails</v-btn>
                 </v-col>
                 <v-col cols="6">
-                    <v-btn block color = "info" href = "/addedIngredients">Added Ingredients</v-btn>
+                    <v-btn block color = "info" href = "/accountDetails">Account Details</v-btn>
                 </v-col>
             </v-row>
             <v-row justify="center">
                 <v-col cols="6">
-                    <v-btn block color = "info" href = "/recommendations">Recommendations</v-btn>
+                    <v-btn block color = "info" href = "/barShelf">BarShelf</v-btn>
                 </v-col>
                 <v-col cols="6">
                     <v-btn block color = "info" href = "/random">Random</v-btn>

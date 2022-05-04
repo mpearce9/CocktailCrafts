@@ -107,7 +107,7 @@ const routes = [
     {
         path: '/accountdetails',
         name: 'Account Details',
-        component: () => import('../views/addedIngredients'),
+        component: () => import('../views/accountDetailsComponent'),
         beforeEnter(to,from,next) {
             if(val == "unknown"){
                 next('/login');
