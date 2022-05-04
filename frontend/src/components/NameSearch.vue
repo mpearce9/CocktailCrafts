@@ -1,4 +1,5 @@
 <template>
+<!-- component used when user wants to search by name -->
     <v-container grid-list-lg fill-width fluid>
         <v-row justify="center" class="pt-3 mx-16" align="start">
             <v-col cols="10">
@@ -19,6 +20,7 @@ export default {
         }
     },
     methods:{
+        //exports the name search function
         onSearch(){
             this.$emit('nameSearch', this.search)
             this.search = ""

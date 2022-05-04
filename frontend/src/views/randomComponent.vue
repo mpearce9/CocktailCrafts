@@ -1,4 +1,5 @@
 <template>
+<!-- very simlar to the recipe component, however this one always supplies a random drink -->
     <v-app>
         <v-container grid-list-lg fluid fill-height>
             <v-row justify="center">
@@ -61,6 +62,7 @@
 import router from '../router/index'
 const axios = require('axios')
 
+//brings in the drink details
 function preprocessDrink(drink){
     let ingredients = []
     let j = 1
@@ -106,6 +108,7 @@ export default {
         useremail: '',
         }
     },
+    // api calls to the drink api, user favorites, and logininfo
     async created(){
         await axios.get("https://www.thecocktaildb.com/api/json/v1/1/random.php")
         .then(response => this.curDrink = preprocessDrink(response.data.drinks[0]))
@@ -132,12 +135,15 @@ export default {
         return this.curIcon = this.favBoolean ? "mdi-heart" : "mdi-heart-outline";
     },
     methods: {
+        //link to back to account
         backToAccount(){
             router.push({name: 'Account'})
         },
+        //randomizes again
         backToRandom(){
             window.location.reload();
         },
+        //favorite function
         favorite(){
             this.favBoolean = !this.favBoolean;
             this.curIcon = this.favBoolean ? "mdi-heart" : "mdi-heart-outline";
