@@ -20,7 +20,7 @@
             </v-scroll-x-transition>
             <v-row justify="center">
                 <v-col>
-                    <component :is="curComps[2]" :apiDrinkList="apiDrinkList" :tableLoading="tableLoading" @row-clicked="rowClicked"/>
+                    <component :is="curComps[2]" :apiDrinkList="apiDrinkList" :favLoading="favLoading" :tableLoading="tableLoading" @row-clicked="rowClicked"/>
                 </v-col>
             </v-row>
         </v-container>
@@ -59,6 +59,22 @@ function preprocessApiDrinks(drinkArr){
                             favorited: false})
     }
     return finalDrinkArr
+}
+
+async function getFavorites(apiDrinkList){
+    console.log(apiDrinkList);
+    axios.get('/api/listfavorites')
+        .then(response => {
+            let savedDrinks = response.data
+            savedDrinks.forEach(element => {
+                apiDrinkList.forEach(drink => {
+                    if(drink.id == element["cocktailid"]){
+                        drink.favorited = true
+                    }
+                })
+            })
+        })
+    return apiDrinkList
 }
 
 async function getFullDetails(drinkArr){
@@ -108,7 +124,8 @@ export default  {
             ingredientsList: [],
             tableLoading: true,
             curSearch: "",
-            curIngSearch: []
+            curIngSearch: [],
+            favLoading: true
         }
     },
     async created() {
@@ -131,7 +148,7 @@ export default  {
         }
         else if(localStorage.getItem('drink-list')){
             this.apiDrinkList = JSON.parse(localStorage.getItem('drink-list'))
-            this.tableLoading = false
+            this.tableLoading = false 
         } else {
             let fullResponse = ""
             await axios.get('/api/populate')
@@ -140,11 +157,15 @@ export default  {
                 })
             
             this.apiDrinkList = await getFullDetails(fullResponse.slice(0,20))
-            this.tableLoading = false  
+            this.tableLoading = false 
             this.apiDrinkList = await getFullDetails(fullResponse)
             localStorage.setItem('drink-list', JSON.stringify(this.apiDrinkList))
              
         }
+        this.apiDrinkList = await getFavorites(this.apiDrinkList)
+        this.favLoading = false
+        console.log(this.apiDrinkList);
+        this.tableLoading = false 
         if(localStorage.getItem('ingredient-list')){
             this.ingredientsList = JSON.parse(localStorage.getItem('ingredient-list'))
         } else {
