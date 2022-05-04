@@ -1,4 +1,5 @@
 <template>
+<!-- home page for the user who is not logged in, shows a photo, a little blurb about our app, and then a link to log in to our site -->
     <v-app>
     <v-container>
     <v-row
@@ -23,7 +24,7 @@
           <div>
             <h1 style = "font-size:3.5em;">ENJOY A DRINK</h1>
             <p style = "font-size:1.25em;">Wondering what your next drink is going to be? Cocktail Crafts is for you. Choose your ingredients and start crafting!</p>
-            <v-btn color = "info" href = "/login">join now</v-btn>
+            <v-btn color = "info" to = "/login">join now</v-btn>
         </div>
         </v-card>
       </v-col>

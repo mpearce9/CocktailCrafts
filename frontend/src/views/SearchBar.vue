@@ -1,4 +1,5 @@
 <template>
+<!-- this search page implements a table and search bar that will dynamically load drinks for the user -->
     <v-app>
         <v-container grid-list-lg fill-width fluid>
             <v-row justify="center">
@@ -35,6 +36,7 @@ import router from '../router/index'
 import {beforeRouteLeave} from 'vue-router'
 const axios = require('axios')
 
+// preprocesses all of the drinks from the api
 function preprocessApiDrinks(drinkArr){
     let finalDrinkArr = []
     for(let i = 0; i < drinkArr.length; i++){
@@ -77,6 +79,7 @@ async function getFavorites(apiDrinkList){
     return apiDrinkList
 }
 
+//method to retrieve all the details of the drinks
 async function getFullDetails(drinkArr){
     let fullDetailArr = []
     let promises = []
@@ -92,6 +95,7 @@ async function getFullDetails(drinkArr){
     return fullDetailArr
 }
 
+//method to get the ingredients of the drinks
 function preprocessIngredientsList(ingArr){
     let finalIngArr = []
     for(let i = 0; i<ingArr.length; i++){
@@ -128,6 +132,7 @@ export default  {
             favLoading: true
         }
     },
+    //gets the drink list and stores it locally
     async created() {
         if(this.headerSearch){
             this.curSearch = this.headerSearch
@@ -169,6 +174,7 @@ export default  {
         if(localStorage.getItem('ingredient-list')){
             this.ingredientsList = JSON.parse(localStorage.getItem('ingredient-list'))
         } else {
+            //api call to grab the ingredients from the cocktaildb
             await axios.get('/api/getIngredients')
                 .then(response => {
                     this.ingredientsList = preprocessIngredientsList(response.data.drinks)
@@ -185,9 +191,11 @@ export default  {
         next()
     },
     methods: {
+        // when a row is clicked, recipe page pulls up
         rowClicked(value){
             router.push({name: 'recipe', params: { id: value.id } })
         },
+        //name search functions when called
         async onNameSearch(search){
             sessionStorage.setItem("lastSearch", search)
             sessionStorage.setItem("lastSearchType", "name")
@@ -204,6 +212,7 @@ export default  {
                 this.tableLoading = false
             })
         },
+        //ingredient search function when called
         async onIngredientSearch(search){
             sessionStorage.setItem("lastSearch", search)
             sessionStorage.setItem("lastSearchType", "ingredient")

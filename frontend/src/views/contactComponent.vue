@@ -1,5 +1,6 @@
 <template>
   <v-container style="background-color:black">
+    <!-- simple contact page so that users can contact us at cocktail crafts, not fully implemented -->
     <v-row class="text-center">
 
       <v-col class="mb-4">

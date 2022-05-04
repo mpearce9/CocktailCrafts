@@ -1,4 +1,5 @@
 <template>
+<!-- the option that pulls up when the user selects to ingredients search -->
     <v-container grid-list-lg fill-width fluid>
         <v-row justify="center" class="pt-3 mx-16" align="start">
                 <v-col cols="10">
@@ -19,6 +20,7 @@ export default {
     },
     data(){
         return {
+            //contains all the options for the ingredients
             option_searches: [{"name" : "Liquor", "options" : ["Whiskey", "Gin", "Vodka", "Rum"]}, 
                               {"name" : "Mixer", "options" : ["Orange Juice", "Cranberry Juice", "Simple Syrup", "Vermouth"]},
                               {"name" : "Bitters", "options" : ["Angostura", "Orange", "Peychauds", "Cinnamon"]},
