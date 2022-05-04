@@ -118,7 +118,7 @@ export default  {
     },
     methods: {
         rowClicked(value, info){
-            router.push({name: 'recipe', params: { id: value.id } })
+            router.push({name: 'popularrecipe', params: { id: value.id } })
         }
     }
 }

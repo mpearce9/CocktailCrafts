@@ -160,6 +160,20 @@ const routes = [
             }
             next();
         }
+    },
+    {
+        path: '/popularrecipe/:id',
+        name: "popularrecipe",
+        props: true,
+        component: () => import('../views/popularRecipeComponent'),
+        beforeEnter(to,from,next) {
+            if(val == "unknown"){
+                next('/login');
+            }else{
+                next();
+            }
+            next();
+        }
     }
 
 ]
