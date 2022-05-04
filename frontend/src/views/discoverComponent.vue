@@ -1,4 +1,5 @@
 <template>
+<!-- this discover page is used for the users to have the main options to explore our site, presents links for the user to navigate quickly -->
     <v-app>
     <v-container>
     <v-row

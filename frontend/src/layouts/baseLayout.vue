@@ -1,4 +1,5 @@
 <template>
+<!-- this is the base layout for the app, this includes the navigation, the dynamic header, and the footer as well, all pages will contain this -->
 <v-app>
   <v-card class="overflow-hidden" color = "rgb(15,12,12)">
     <v-app-bar
@@ -8,6 +9,7 @@
     >
       <v-toolbar-title style="cursor: pointer" @click="$router.push('/')">cocktail crafts</v-toolbar-title>
       <v-spacer></v-spacer>
+      <!-- this component is a dynamic header based on if the user is logged in or not -->
       <component v-bind:is= "component"></component>
     </v-app-bar>
       <v-container style="height: 100px;">
@@ -63,6 +65,7 @@ export default {
           component:''
         }
     },
+    //makes an api call to discover if the user is logged in or not, based on the response will show a different navigation bar component
     async created(){
         await axios.get("/api/logininfo")
         .then(response => {

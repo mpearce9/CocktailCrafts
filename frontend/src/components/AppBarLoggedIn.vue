@@ -1,4 +1,5 @@
 <template>
+<!-- this is the navigation component returned if the user is logged in, contains navigation to search, logout, and account functions -->
 <div>
       <v-btn plain to="/">
         HOME
@@ -31,6 +32,7 @@ export default {
         }
     },
     methods: {
+      // the logout method is specific to this component, uses an api call to destroy the user's session
         logOut(){
             axios.post("/api/logout")
             .then(response => {
