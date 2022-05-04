@@ -1,4 +1,5 @@
 <template>
+<!-- this page is a table of the saved cocktails that are favorited by a certain user, the table is dynamic -->
     <v-app>
         <v-container grid-list-lg fill-width fluid>
             <v-row justify="center">
@@ -40,6 +41,7 @@ import axios from 'axios'
 import router from '../router/index'
 
 function processSavedRecipes(drinkArr){
+    // pushed the array of saved drinks to the table
     let finalDrinkArr = []
     for(let i = 0; i < drinkArr.length; i++){
         let j = 1
@@ -59,6 +61,7 @@ function processSavedRecipes(drinkArr){
 export default  {
     async created() {
         await axios.get("/api/logininfo")
+        //gets the logged in user data
         .then(response => {
             if(response.data.email){
                 console.log(response.data);
@@ -70,6 +73,7 @@ export default  {
                 return this.useremail = "unknown"
         })
 
+        //pulls from the server database to get the data of favorites per user
         await axios.get("/api/listfavorites")
         .then(response => {
             if(response.data){
@@ -85,6 +89,7 @@ export default  {
     },
     data() {
         return {  
+            // these are the table headers and values
             apiHeaders: [{text: "Drink Name", align: "start", value: "dName"},
                         {text: "Category", value: "category"},
                         {text: "Ingredients", value: "dIngredients"}],
@@ -96,6 +101,7 @@ export default  {
         }
     },
     methods: {
+        // when the row is clicked it takes the user to a recipe page which is more in depth
         rowClicked(value, info){
             router.push({name: 'recipe', params: { id: value.id } })
         },

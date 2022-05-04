@@ -9,6 +9,7 @@ Vue.config.productionTip = false
 Vue.use(AsyncComputed)
 Vue.config.devtools = true
 
+//simply instantiates the vue app and exports it to the website
 new Vue({
     router,
     vuetify,

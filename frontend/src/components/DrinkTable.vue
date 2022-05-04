@@ -1,4 +1,5 @@
 <template>
+<!-- this is the table component that is used for the search page, passes all of the necessary values and props -->
     <v-container>
         <v-data-table
             :headers="apiHeaders"
@@ -29,6 +30,7 @@ export default {
         tableLoading: Boolean
     },
     data() {
+        //contains the headers for the tables and the values for each column
         return {
             apiHeaders: [{text: "", align: "start", value: "img", sortable: false},
                         {text: "Drink Name", value: "dName"},

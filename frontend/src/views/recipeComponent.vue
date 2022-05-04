@@ -1,4 +1,5 @@
 <template>
+<!-- shows details for a given drink, shows the image, name, ingredients and instructions -->
     <v-app>
         <v-container grid-list-lg fluid fill-height>
             <v-row justify="center">
@@ -51,6 +52,7 @@
 import router from '../router/index'
 const axios = require('axios')
 
+// pulls in the drink data to be able to present it on the page
 function preprocessDrink(drink){
     let ingredients = []
     let j = 1
@@ -89,6 +91,8 @@ export default {
         useremail: '',
         }
     },
+
+    // api calls to the cocktaildb and the users to get favorite information, drink information, and user information
     async created(){
         await axios.get("/api/idsearch", {params: {id: this.id}})
         .then(response => this.curDrink = preprocessDrink(response.data.drinks[0]))
@@ -118,6 +122,7 @@ export default {
         backToSearch(){
             router.push({name: 'search'})
         },
+        //method to favorite the specific drink
         favorite(){
             this.favBoolean = !this.favBoolean;
             this.curIcon = this.favBoolean ? "mdi-heart" : "mdi-heart-outline";
