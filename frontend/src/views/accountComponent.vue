@@ -11,6 +11,7 @@
         justify-center
         >
           <div>
+              <!-- this page appears once the user logs in, contains link to various pages specific to the user -->
             <v-row>
                 <h1 style = "font-size:2.0em;" id = "welcome">Welcome, {{ user }} </h1>
             </v-row>
@@ -51,6 +52,7 @@ import axios from 'axios'
       }
       },
       async created() {
+          //this api call gets the user's name who is logged in so it can welcome the user by name
           await axios.get("/api/logininfo")
         .then(response => {
             if(response.data.name){

@@ -1,4 +1,5 @@
 <template>
+<!-- this home page is an alternate, it is used for the users who have been logged in to the site, just varies with the text to make more sense -->
     <v-app>
     <v-container>
     <v-row

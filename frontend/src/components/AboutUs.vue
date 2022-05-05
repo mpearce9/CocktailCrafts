@@ -1,4 +1,5 @@
 <template>
+<!-- simple page to give a little about us blurb to describe our mission -->
   <v-container>
     <v-row class="text-center">
       <v-col cols="12">
