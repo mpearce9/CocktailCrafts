@@ -29,4 +29,8 @@ router.get('/listfavorites', usercontroller.listfavorites)
 
 router.get('/isfavorite/:id', usercontroller.isfavorite)
 
+router.post('/changeName', usercontroller.changeName)
+
+router.post('/changePass', usercontroller.changePassword)
+
 module.exports = router;

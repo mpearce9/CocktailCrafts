@@ -53,10 +53,10 @@ export default {
         .then(response => {
             console.log(response.data);
             if(response.data.email){
-                return  this.useremail = response.data.email;
+                this.useremail = response.data.email;
             }
             else
-                return this.useremail = "UnknownUser"
+                this.useremail = "UnknownUser"
         })
         console.log(this.apiDrinkList);
     },

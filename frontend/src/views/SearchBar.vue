@@ -215,6 +215,8 @@ export default  {
                     this.apiDrinkList = []
                 this.tableLoading = false
             })
+            this.apiDrinkList = await getFavorites(this.apiDrinkList)
+            this.favLoading = false
         },
         //ingredient search function when called
         async onIngredientSearch(search){
@@ -243,6 +245,7 @@ export default  {
             else
                 this.apiDrinkList = []
             this.tableLoading = false
+            this.favLoading = false
         }
     },
 }
