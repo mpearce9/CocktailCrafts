@@ -153,21 +153,6 @@ const routes = [
         }
     },
     {
-<<<<<<< HEAD
-        path: '/barShelf',
-        name: 'BarShelf',
-        component: () => import('../views/barShelf')
-    },
-    {
-        path: '/add',
-        name: 'Add',
-        component: () => import('../views/add')
-    },
-    {
-        path: '/added',
-        name: 'Added',
-        component: () => import('../views/addedIngredients')
-=======
         path: '/popular',
         name: 'Popular',
         component: () => import('../views/popular'),
@@ -193,8 +178,8 @@ const routes = [
             }
             next();
         }
->>>>>>> 4867fcfe9855869b54a2eb2df697ea4acbd98969
     }
+
 ]
 
 // exports the router for our vue project
