@@ -16,14 +16,7 @@
 export default {
     props: {
         ingredient_options: Array,
-<<<<<<< HEAD
-        searchButton: {
-            type: Boolean,
-            default: true
-        }
-=======
         curSearch: Array
->>>>>>> 729fa6847ee59c125f2eecf7fd56296a4104acbb
     },
     data(){
         return {
