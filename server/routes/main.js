@@ -29,7 +29,6 @@ router.get('/listfavorites', usercontroller.listfavorites)
 
 router.get('/isfavorite/:id', usercontroller.isfavorite)
 
-<<<<<<< HEAD
 router.post('/addIngredients', ingredientsController.addIngredients)
 
 router.post('/listAddedIngredients', ingredientsController.listAddedIngredients)
@@ -41,6 +40,4 @@ router.use(function(err, req, res, next) {
   res.render('error',{error:err,message:err.message,url:req.url});
 });
 */
-=======
->>>>>>> 4867fcfe9855869b54a2eb2df697ea4acbd98969
 module.exports = router;

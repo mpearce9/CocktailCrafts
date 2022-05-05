@@ -153,7 +153,6 @@ const routes = [
         }
     },
     {
-<<<<<<< HEAD
         path: '/barShelf',
         name: 'BarShelf',
         component: () => import('../views/barShelf')
@@ -167,33 +166,6 @@ const routes = [
         path: '/added',
         name: 'Added',
         component: () => import('../views/addedIngredients')
-=======
-        path: '/popular',
-        name: 'Popular',
-        component: () => import('../views/popular'),
-        beforeEnter(to,from,next) {
-            if(val == "unknown"){
-                next('/login');
-            }else{
-                next();
-            }
-            next();
-        }
-    },
-    {
-        path: '/popularrecipe/:id',
-        name: "popularrecipe",
-        props: true,
-        component: () => import('../views/popularRecipeComponent'),
-        beforeEnter(to,from,next) {
-            if(val == "unknown"){
-                next('/login');
-            }else{
-                next();
-            }
-            next();
-        }
->>>>>>> 4867fcfe9855869b54a2eb2df697ea4acbd98969
     }
 ]
 
