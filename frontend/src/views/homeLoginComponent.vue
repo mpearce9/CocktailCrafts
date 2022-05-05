@@ -1,4 +1,5 @@
 <template>
+<!-- this home page is an alternate, it is used for the users who have been logged in to the site, just varies with the text to make more sense -->
     <v-app>
     <v-container>
     <v-row
@@ -23,7 +24,7 @@
           <div>
             <h1 style = "font-size:3.5em;">ENJOY A DRINK</h1>
             <p style = "font-size:1.25em;">Wondering what your next drink is going to be? Cocktail Crafts is for you. Choose your ingredients and start crafting!</p>
-            <v-btn color = "info" href = "/search">Start Crafting!</v-btn>
+            <v-btn color = "info" to = "/search">Start Crafting!</v-btn>
         </div>
         </v-card>
       </v-col>

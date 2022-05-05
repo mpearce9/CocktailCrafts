@@ -1,4 +1,5 @@
 <template>
+<!-- the option that pulls up when the user selects to ingredients search -->
     <v-container grid-list-lg fill-width fluid>
         <v-row justify="center" class="pt-3 mx-16" align="start">
                 <v-col cols="10">
@@ -16,19 +17,27 @@
 export default {
     props: {
         ingredient_options: Array,
+<<<<<<< HEAD
         searchButton: {
             type: Boolean,
             default: true
         }
+=======
+        curSearch: Array
+>>>>>>> 4867fcfe9855869b54a2eb2df697ea4acbd98969
     },
     data(){
         return {
+            //contains all the options for the ingredients
             option_searches: [{"name" : "Liquor", "options" : ["Whiskey", "Gin", "Vodka", "Rum"]}, 
                               {"name" : "Mixer", "options" : ["Orange Juice", "Cranberry Juice", "Simple Syrup", "Vermouth"]},
                               {"name" : "Bitters", "options" : ["Angostura", "Orange", "Peychauds", "Cinnamon"]},
                               {"name" : "Garnish", "options" : ["Orange", "Lime", "Cherry", "Olive"]}],
             curIngredient: [],
         }
+    },
+    created() {
+        this.curIngredient = this.curSearch
     },
     methods: {
         onSearch(){

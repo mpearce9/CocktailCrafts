@@ -5,6 +5,7 @@
       class="mb-8"
       no-gutters
     >
+    <!-- this will contain the login card, with the text fields and labels with appropriate values -->
       <v-col md="5" offset-md="0">
           <h1>join the <strong><span style = "font-size:1.75em; color:#1260cc;">fun</span></strong>.</h1>
           <v-card class = "logincard">
@@ -36,6 +37,7 @@
             >
             log in
             </v-btn>
+            <!-- the alerts below show up based on if the login is successful or not -->
             <v-alert
               :value="loginalert"
               type ="success"
@@ -69,6 +71,7 @@
         md="5"
         offset-md="0"
       >
+      <!-- this is the sign up card, similar to log in but has different function and data fields -->
       <v-card class = "logincard">
           <h2 style = "text-align: center;">Don't have an account?</h2>
             <v-form
@@ -144,8 +147,8 @@
     </v-app>
 </template>
 
-
 <script>
+// the script below includes all the login and sign up functions for this component
   import axios from 'axios';
   const apiClient = axios.create({ headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' } });
   export default {
@@ -164,6 +167,7 @@
         loginalert:false,
         signupalertbad:false,
         loginalertbad:false,
+        //variables and rules used for all of the data fields, this aids in the input validation 
         emailRules: [
           v => !!v || 'E-mail is required',
           v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -181,6 +185,7 @@
       }
       },
       methods:{
+        //presents an api call to the server side of the application to login in the user and produce output based on response from api
             loginUser(){
                 if(this.emailbox != "" && this.passwordbox != ""){
                 console.log(this.$refs.form);
@@ -207,6 +212,7 @@
                   this.$refs.form.validate();
                 }
             },
+            //uses a signup api call to the server side to create a new user and add it to the database
             signUp(){
             if(this.namebox != "" && this.emailbox1 != "" && this.passwordbox1 != ""){
              apiClient.post('/api/signup', {
@@ -218,9 +224,7 @@
                  if(response.data == "success"){
                       this.signupalert = true;
                       this.signupalertbad = false;
-                      this.namebox = '';
-                      this.emailbox1 = '';
-                      this.passwordbox1 = '';
+                      this.$refs.form1.reset();
                  }else{
                      console.log(response.data);
                      this.signupalertbad = true;
@@ -237,7 +241,9 @@
   }
 </script>
 
+
 <style scoped>
+/* produces the style for the alerts to make them farther apart from other objects */
 #signupalert, #loginalert, #signupalertbad, #loginalertbad {
     margin-top:5px;
 }

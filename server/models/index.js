@@ -1,3 +1,5 @@
+// this index file configures the models and exports them to the databse directly, uses the mongoose format
+
 const dbConfig = require("../config/db.config.js");
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
