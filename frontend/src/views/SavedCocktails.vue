@@ -103,7 +103,7 @@ export default  {
     methods: {
         // when the row is clicked it takes the user to a recipe page which is more in depth
         rowClicked(value, info){
-            router.push({name: 'recipe', params: { id: value.id } })
+            router.push({name: 'recipe', params: { id: value.id, backTo: "Saved Cocktails" } })
         },
     }
 }
