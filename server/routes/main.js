@@ -28,4 +28,15 @@ router.get('/listfavorites', usercontroller.listfavorites)
 
 router.get('/isfavorite/:id', usercontroller.isfavorite)
 
+router.post('/addIngredients', ingredientsController.addIngredients)
+
+router.post('/listAddedIngredients', ingredientsController.listAddedIngredients)
+/*
+// error handler
+router.use(function(err, req, res, next) {
+  console.log('error handling');
+  res.status(err.status || 500);
+  res.render('error',{error:err,message:err.message,url:req.url});
+});
+*/
 module.exports = router;
