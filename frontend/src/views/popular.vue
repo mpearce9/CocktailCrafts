@@ -28,6 +28,10 @@
                             <v-list-item v-for="i in item.dIngredients" :key="i">{{i}}</v-list-item>
                         </v-list>
                     </template>
+                    <template v-slot:item.favorited="{item}">
+                        <v-progress-circular v-if="favLoading" indeterminate dark/>
+                        <v-simple-checkbox v-else dark off-icon="mdi-heart-outline" on-icon="mdi-heart" v-model="item.favorited" @click="favorite(item)"/>
+                    </template>
                     </v-data-table>
                 </v-col>
             </v-row>
@@ -61,9 +65,26 @@ function preprocessApiDrinks(drinkArr){
                             dIngredients: ingredients, 
                             id: drinkArr[i]["idDrink"],
                             img: drinkArr[i]["strDrinkThumb"],
-                            instructions: drinkArr[i]["strInstructions"]})
+                            instructions: drinkArr[i]["strInstructions"],
+                            favorited: false})
     }
     return finalDrinkArr
+}
+
+async function getFavorites(apiDrinkList){
+    console.log(apiDrinkList);
+    axios.get('/api/listfavorites')
+        .then(response => {
+            let savedDrinks = response.data
+            savedDrinks.forEach(element => {
+                apiDrinkList.forEach(drink => {
+                    if(drink.id == element["cocktailid"]){
+                        drink.favorited = true
+                    }
+                })
+            })
+        })
+    return apiDrinkList
 }
 
 function getFullDetails(drinkArr){
@@ -99,26 +120,57 @@ export default  {
             selected: 0,
             apiHeaders: [{text: "Drink Name", align: "start", value: "dName"},
                         {text: "Category", value: "category"},
-                        {text: "Ingredients", value: "dIngredients"}],
+                        {text: "Ingredients", value: "dIngredients"},
+                        {text: "Favorite", value: "favorited"}],
             apiDrinkList: [],
-            ingredientsList: [],
-            tableLoading: true
+            tableLoading: true,
+            favLoading: true,
+            useremail: ""
         }
     },
     async created() {
-        await axios.get('https://www.thecocktaildb.com/api/json/v2/9973533/popular.php')
+        await axios.get("/api/logininfo")
+        .then(response => {
+            console.log(response.data);
+            if(response.data.email){
+                return  this.useremail = response.data.email;
+            }
+            else
+                return this.useremail = "UnknownUser"
+        })
+        await axios.get('/api/getpopular')
             .then(response => {
                     this.apiDrinkList = preprocessApiDrinks(response.data.drinks)
                     this.tableLoading = false
                 })
-        await axios.get("https://www.thecocktaildb.com/api/json/v2/9973533/list.php?i=list")
-            .then(response => {
-                this.ingredientsList = preprocessIngredientsList(response.data.drinks)
-            })
+        this.apiDrinkList = await getFavorites(this.apiDrinkList)
+        this.favLoading = false
     },
     methods: {
         rowClicked(value, info){
             router.push({name: 'popularrecipe', params: { id: value.id } })
+        },
+        favorite(curDrink){
+            console.log(curDrink);
+            console.log(this.useremail);
+            if(curDrink.favorited){
+                axios.post("/api/favorite",{
+                name: curDrink.dName, ingredients: curDrink.dIngredients, category: curDrink.category, cocktailid: curDrink.id, img: curDrink.img, instructions: curDrink.instructions, useremail: this.useremail
+                })
+                .then(response =>{
+                    console.log(response);
+                })
+                .catch(err => console.log(err));
+            }
+            else{
+                axios.post("/api/unfavorite",{
+                    name: curDrink.dName, ingredients: curDrink.dIngredients, category: curDrink.category, cocktailid: curDrink.id, img: curDrink.img, instructions: curDrink.instructions, useremail: this.useremail
+                })
+                .then(response =>{
+                    console.log(response);
+                })
+                .catch(err => console.log(err));
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ router.get('/idsearch', controller.idDrinkSearch)
 router.get('/namesearch', controller.nameDrinkSearch)
 router.get('/getIngredients', controller.getIngredients)
 router.get('/ingredientSearch', controller.ingredientDrinkSearch)
+router.get('/getpopular', controller.getPopular)
 
 router.post('/login', usercontroller.login)
 
