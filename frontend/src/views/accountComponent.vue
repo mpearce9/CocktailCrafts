@@ -28,11 +28,7 @@
             </v-row>
             <v-row justify="center">
                 <v-col cols="6">
-<<<<<<< HEAD
                     <v-btn block color = "info" href = "/barShelf">BarShelf</v-btn>
-=======
-                    <v-btn block color = "info" to = "/recommendations">Recommendations</v-btn>
->>>>>>> 729fa6847ee59c125f2eecf7fd56296a4104acbb
                 </v-col>
                 <v-col cols="6">
                     <v-btn block color = "info" to = "/random">Random</v-btn>
