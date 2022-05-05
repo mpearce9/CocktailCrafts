@@ -178,6 +178,19 @@ const routes = [
             }
             next();
         }
+    },
+    {
+        path: '/barShelf',
+        name: 'barShelf',
+        component: () => import('../views/barShelf'),
+        beforeEnter(to,from,next) {
+            if(val == "unknown"){
+                next('/login');
+            }else{
+                next();
+            }
+            next();
+        }
     }
 
 ]
