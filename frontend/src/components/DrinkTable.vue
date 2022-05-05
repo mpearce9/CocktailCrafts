@@ -89,3 +89,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+.v-list{
+    background: none !important;
+}
+</style>

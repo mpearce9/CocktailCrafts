@@ -43,7 +43,8 @@
                 </v-col>
             </v-row>
             <v-row justify="center" align="end">
-                <v-btn @click="backToSearch">Back to Search</v-btn>
+                <v-btn v-if="backTo == 'search'" @click="backToPrev">Back to Search</v-btn>
+                <v-btn v-if="backTo == 'Saved Cocktails'" @click="backToPrev">Back to Saved Drinks</v-btn>
             </v-row>
         </v-container>
     </v-app>
@@ -77,6 +78,7 @@ function preprocessDrink(drink){
 export default {
     props:{
         id : String,
+        backTo: String
     },
     data() {
         return {
@@ -119,8 +121,8 @@ export default {
         return this.curIcon = this.favBoolean ? "mdi-heart" : "mdi-heart-outline";
     },
     methods: {
-        backToSearch(){
-            router.push({name: 'search'})
+        backToPrev(){
+            router.push({name: this.backTo})
         },
         //method to favorite the specific drink
         favorite(){

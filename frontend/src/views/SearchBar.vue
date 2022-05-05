@@ -92,6 +92,7 @@ async function getFullDetails(drinkArr){
     }
     await Promise.all(promises).then(() => {
         console.log(fullDetailArr)})
+    fullDetailArr = await getFavorites(fullDetailArr)
     return fullDetailArr
 }
 
@@ -153,7 +154,9 @@ export default  {
         }
         else if(localStorage.getItem('drink-list')){
             this.apiDrinkList = JSON.parse(localStorage.getItem('drink-list'))
+            this.apiDrinkList = await getFavorites(this.apiDrinkList)
             this.tableLoading = false 
+            this.favLoading = false
         } else {
             let fullResponse = ""
             await axios.get('/api/populate')
@@ -163,14 +166,15 @@ export default  {
             
             this.apiDrinkList = await getFullDetails(fullResponse.slice(0,20))
             this.tableLoading = false 
+            this.favLoading = false
             this.apiDrinkList = await getFullDetails(fullResponse)
+            
             localStorage.setItem('drink-list', JSON.stringify(this.apiDrinkList))
              
         }
-        this.apiDrinkList = await getFavorites(this.apiDrinkList)
-        this.favLoading = false
-        console.log(this.apiDrinkList);
-        this.tableLoading = false 
+        
+        //this.apiDrinkList = await getFavorites(this.apiDrinkList)
+        
         if(localStorage.getItem('ingredient-list')){
             this.ingredientsList = JSON.parse(localStorage.getItem('ingredient-list'))
         } else {
@@ -193,7 +197,7 @@ export default  {
     methods: {
         // when a row is clicked, recipe page pulls up
         rowClicked(value){
-            router.push({name: 'recipe', params: { id: value.id } })
+            router.push({name: 'recipe', params: { id: value.id, backTo: 'search' } })
         },
         //name search functions when called
         async onNameSearch(search){
@@ -243,8 +247,3 @@ export default  {
     },
 }
 </script>
-<style scoped>
-.v-list{
-    background: none !important;
-}
-</style>
