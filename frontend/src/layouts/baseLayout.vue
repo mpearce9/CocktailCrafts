@@ -9,7 +9,7 @@
     >
       <v-toolbar-title style="cursor: pointer" @click="$router.push('/')">cocktail crafts</v-toolbar-title>
       <v-container style="height: 100%; width: 50%">
-        <v-text-field v-if="!isSearchPage" prepend-inner-icon="mdi-magnify" label="Search for a Drink" style="align: center" @keydown.enter="$router.push({name: 'search', params: {headerSearch: drinkSearch}})" v-model="drinkSearch" dark outlined dense clearable/>
+        <v-text-field v-if="!isSearchPage" prepend-inner-icon="mdi-magnify" label="Search for a Drink" style="align: center" @keydown.enter="onSearch" v-model="drinkSearch" dark outlined dense clearable/>
       </v-container>
       <!-- this component is a dynamic header based on if the user is logged in or not -->
       <component v-bind:is= "component"></component>
@@ -55,6 +55,7 @@
 <script>
 import loggedin from '../components/AppBarLoggedIn.vue'
 import regular from '../components/AppBarRegular.vue'
+import router from '../router/index'
 const axios = require('axios')
 
 export default {
@@ -88,6 +89,10 @@ export default {
         })
     },
     methods: {
+      onSearch(){
+        router.push({name: 'search', params: {headerSearch: this.drinkSearch}})
+        this.drinkSearch = ""
+      }
     }
 }
 </script>

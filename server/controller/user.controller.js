@@ -56,8 +56,46 @@ exports.login = (req, res, next)=>{
 
 //returns the login info for a logged in user
 exports.getlogininfo = (req,res,next)=>{
-    return res.json(req.session);
+    User.findOne({email: req.session.email})
+    .then(user => {
+        if(user)
+            res.json({email: user.email, name: user.name})
+        else
+            res.json(req.session)
+    })
 };
+
+exports.changeName = (req, res, next)=>{
+    let email = req.body.email
+    let newName = req.body.name
+    User.findOne({email: email})
+    .then(user => {
+        console.log(user);
+        user.name = newName
+        user.save()
+        .then(saved => {
+            console.log(saved);
+        })
+        res.send("success")
+    })
+    .catch(error => {
+        res.send(error)
+    })
+}
+
+exports.changePassword = (req, res, next) => {
+    let email = req.body.email
+    let newPass = req.body.pass
+    User.findOne({email: email})
+    .then(user => {
+        user.password = newPass
+        user.save()
+        res.send("success")
+    })
+    .catch(error => {
+        res.send(error)
+    })
+}
 
 // destroys the user's session, logouts the user
 exports.logout = (req, res, next)=>{
