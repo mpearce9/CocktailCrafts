@@ -51,3 +51,12 @@ exports.ingredientDrinkSearch = (req, res) => {
         console.log(error);
     })
 }
+exports.getPopular = (req, res) => {
+    axios.get("https://www.thecocktaildb.com/api/json/v2/9973533/popular.php")
+    .then(function (response) {
+        res.json(response.data)
+    })
+    .catch(error => {
+        console.log(error);
+    })
+}

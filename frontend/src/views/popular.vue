@@ -101,20 +101,15 @@ export default  {
                         {text: "Category", value: "category"},
                         {text: "Ingredients", value: "dIngredients"}],
             apiDrinkList: [],
-            ingredientsList: [],
             tableLoading: true
         }
     },
     async created() {
-        await axios.get('https://www.thecocktaildb.com/api/json/v2/9973533/popular.php')
+        await axios.get('/api/getpopular')
             .then(response => {
                     this.apiDrinkList = preprocessApiDrinks(response.data.drinks)
                     this.tableLoading = false
                 })
-        await axios.get("https://www.thecocktaildb.com/api/json/v2/9973533/list.php?i=list")
-            .then(response => {
-                this.ingredientsList = preprocessIngredientsList(response.data.drinks)
-            })
     },
     methods: {
         rowClicked(value, info){
