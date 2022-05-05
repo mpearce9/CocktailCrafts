@@ -1,5 +1,6 @@
 <template>
   <v-container style="background-color:black">
+    <!-- these account details are shown based on the current logged in user -->
     <v-row class="text-center">
 
       <v-col class="mb-4">
@@ -22,7 +23,6 @@
               <option style="color:black">Activity 4</option>
           </select>
           <br><br>
-          <p style="color:white">Added Ingredients: </p>
         </form>
 
       </v-col>

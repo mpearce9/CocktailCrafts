@@ -1,3 +1,6 @@
+// the favorite models contains data to be put in the database, 
+//it contains the drink name, category, instructions, ingreedients, img, id, and useremail related to the favorite
+
 module.exports = mongoose => {
     const Favorite = mongoose.model(
       "favorite",

@@ -7,6 +7,7 @@
 </style>
 <script>
     import baseLayout from './layouts/baseLayout'
+    // exports the vue app that utilizes the base layout and return the various components
 
     export default {
         name: 'App',

@@ -1,4 +1,5 @@
 <template>
+<!-- this is the base layout for the app, this includes the navigation, the dynamic header, and the footer as well, all pages will contain this -->
 <v-app>
   <v-card class="overflow-hidden" color = "rgb(15,12,12)">
     <v-app-bar
@@ -7,7 +8,10 @@
       dark
     >
       <v-toolbar-title style="cursor: pointer" @click="$router.push('/')">cocktail crafts</v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-container style="height: 100%; width: 50%">
+        <v-text-field v-if="!isSearchPage" prepend-inner-icon="mdi-magnify" label="Search for a Drink" style="align: center" @keydown.enter="$router.push({name: 'search', params: {headerSearch: drinkSearch}})" v-model="drinkSearch" dark outlined dense clearable/>
+      </v-container>
+      <!-- this component is a dynamic header based on if the user is logged in or not -->
       <component v-bind:is= "component"></component>
     </v-app-bar>
       <v-container style="height: 100px;">
@@ -32,10 +36,10 @@
         class="rgb(15, 12, 12) py-4 text-center white--text"
         cols="12"
       >
-      <v-btn plain href="/aboutus">
+      <v-btn plain to="/aboutus">
         ABOUT US
       </v-btn>
-      <v-btn plain href = "/contact">
+      <v-btn plain to = "/contact">
         CONTACT
       </v-btn>
       <v-btn plain disabled>
@@ -60,9 +64,16 @@ export default {
     },
     data() {
         return {
-          component:''
+          component:'',
+          drinkSearch: ""
         }
     },
+    computed: {
+      isSearchPage(){
+        return this.$route.name == "search"
+      }
+    },
+    //makes an api call to discover if the user is logged in or not, based on the response will show a different navigation bar component
     async created(){
         await axios.get("/api/logininfo")
         .then(response => {
