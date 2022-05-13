@@ -42,6 +42,7 @@
       <v-btn plain to = "/contact">
         CONTACT
       </v-btn>
+      <v-text> Alcoholics Anonymous: 1-877-726-4727 </v-text>
       <v-btn plain disabled>
         Copyright 2022
       </v-btn>
